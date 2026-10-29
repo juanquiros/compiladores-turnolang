@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 int yyparse(void);
+int yylex_destroy(void);
 
 extern FILE *yyin;
 extern int lexer_had_error;
@@ -35,17 +36,23 @@ int main(int argc, char *argv[])
     puts("TurnoLang");
     resultado_parser = yyparse();
 
+    if (yylex_destroy() != 0) {
+        fprintf(stderr, "Error interno: no se pudo liberar el scanner.\n");
+        fclose(entrada);
+        return EXIT_FAILURE;
+    }
+
     if (fclose(entrada) != 0) {
         fprintf(stderr, "Error: no se pudo cerrar el archivo '%s'.\n", argv[1]);
         return EXIT_FAILURE;
     }
 
     if (resultado_parser != 0 || lexer_had_error) {
-        fprintf(stderr, "Análisis sintáctico mínimo: fallido.\n");
+        fprintf(stderr, "Análisis léxico y sintáctico: fallido.\n");
         return EXIT_FAILURE;
     }
 
-    puts("Análisis sintáctico mínimo: correcto.");
-    puts("Nota: el intérprete completo todavía no está implementado.");
+    puts("Análisis léxico y sintáctico: correcto.");
+    puts("Semántica e interpretación: pendientes.");
     return EXIT_SUCCESS;
 }

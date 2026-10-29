@@ -1,0 +1,3 @@
+AGENDA "Consultorio";
+
+RESERVAR 1turno DESDE 09:00 HASTA 09:30;

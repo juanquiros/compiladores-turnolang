@@ -52,8 +52,10 @@ LEXICAL_SOURCE="$TEMP_DIR/caracter_desconocido.tl"
 printf 'AGENDA "Consultorio A"\n' >"$INVALID_SOURCE"
 printf 'AGENDA "Consultorio A"@;\n' >"$LEXICAL_SOURCE"
 
+printf 'TURNOLANG - PRUEBAS\n\nSprint 1:\n'
+
 if run_and_capture "$VALID_OUTPUT" "$EXECUTABLE" "$ROOT_DIR/examples/smoke_agenda.tl"; then
-    if grep -Fq 'Análisis sintáctico mínimo: correcto.' "$VALID_OUTPUT"; then
+    if grep -Fq 'Análisis léxico y sintáctico: correcto.' "$VALID_OUTPUT"; then
         pass 'La cabecera mínima válida es aceptada.'
     else
         fail 'La entrada válida terminó con código cero, pero no emitió la confirmación esperada.'
@@ -65,7 +67,7 @@ fi
 if run_and_capture "$INVALID_OUTPUT" "$EXECUTABLE" "$INVALID_SOURCE"; then
     fail 'La cabecera sin punto y coma fue aceptada.'
 else
-    if grep -Fq 'Error sintáctico mínimo' "$INVALID_OUTPUT"; then
+    if grep -Fq 'Error sintáctico en línea' "$INVALID_OUTPUT"; then
         pass 'La cabecera sin punto y coma es rechazada con código no cero.'
     else
         fail 'La entrada inválida falló, pero no informó el error sintáctico esperado.'
@@ -75,7 +77,7 @@ fi
 if run_and_capture "$LEXICAL_OUTPUT" "$EXECUTABLE" "$LEXICAL_SOURCE"; then
     fail 'El carácter desconocido fue ignorado.'
 else
-    if grep -Fq 'Error léxico mínimo' "$LEXICAL_OUTPUT"; then
+    if grep -Fq 'Error léxico en línea' "$LEXICAL_OUTPUT"; then
         pass 'El carácter desconocido se informa como error léxico mínimo.'
     else
         fail 'El carácter desconocido falló sin el diagnóstico léxico esperado.'
@@ -107,4 +109,4 @@ if (( FAILURES > 0 )); then
     exit 1
 fi
 
-printf 'Todas las pruebas mínimas aprobaron.\n'
+printf 'Pruebas del Sprint 1: aprobadas.\n'

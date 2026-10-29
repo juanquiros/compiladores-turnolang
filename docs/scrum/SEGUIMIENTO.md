@@ -4,17 +4,18 @@
 
 | Campo | Estado basado en evidencia |
 |---|---|
-| Sprint actual | Sprint 1 — Compilación, finalizado |
-| Estado general | Base técnica mínima compilable y pruebas smoke aprobadas. El intérprete todavía no está implementado. |
-| Progreso del backlog | 8 tareas completadas, 22 pendientes, 0 en progreso, 0 bloqueadas. |
-| Próximo objetivo | Iniciar Sprint 2 con TL-009: completar tokens y scanner sin avanzar todavía sobre semántica. |
+| Sprint actual | Sprint 2 — Análisis léxico y sintáctico, finalizado |
+| Estado general | Frontend completo y verificable. Semántica, AST e interpretación todavía pendientes. |
+| Progreso del backlog | 12 tareas completadas, 18 pendientes, 0 en progreso, 0 bloqueadas. |
+| Próximo objetivo | Iniciar Sprint 3 con TL-013: construir el AST mínimo sin ejecutar todavía instrucciones. |
 
 ## Cierre de sprints
 
 | Sprint | Estado | Evidencia de cierre |
 |---|---|---|
-| Sprint 0 — Definición y preparación | Completado | Documentación revisada y herramientas verificadas: Flex 2.6.4, Bison 3.8.2, GCC 15.2.0, Make 4.4.1 y Bash 5.3.15. |
-| Sprint 1 — Compilación | Completado | Construcción limpia, incremental y paralela; ejecutable mínimo; casos válido, inválido y archivo inexistente aprobados. |
+| Sprint 0 — Definición y preparación | Completado | Documentación revisada y cadena de herramientas verificada. |
+| Sprint 1 — Compilación | Completado | Construcción reproducible, ejecutable mínimo y cinco pruebas smoke. |
+| Sprint 2 — Análisis léxico y sintáctico | Completado | Gramática completa, diagnósticos por etapa y línea, 21 casos nuevos y cinco regresiones aprobadas. |
 
 ## Actividades completadas
 
@@ -26,17 +27,22 @@
 - [x] [TL-006 — Crear la estructura técnica mínima](BACKLOG.md#tl-006)
 - [x] [TL-007 — Automatizar generación y compilación](BACKLOG.md#tl-007)
 - [x] [TL-008 — Integrar un ejecutable mínimo](BACKLOG.md#tl-008)
+- [x] [TL-009 — Implementar tokens y scanner](BACKLOG.md#tl-009)
+- [x] [TL-010 — Implementar gramática y parser](BACKLOG.md#tl-010)
+- [x] [TL-011 — Implementar diagnósticos del frontend](BACKLOG.md#tl-011)
+- [x] [TL-012 — Automatizar pruebas del frontend](BACKLOG.md#tl-012)
 
-Los completados de Sprint 1 acreditan únicamente la integración mínima de
-Flex, Bison, GCC, Make y `main.c`. No acreditan la gramática completa, el AST,
-la semántica ni el intérprete.
+Los completados del Sprint 2 acreditan reconocimiento y clasificación del
+frontend. No acreditan validación de horarios, reglas de reservas ni ejecución.
 
 ## Actividades pendientes inmediatas
 
-- [ ] [TL-009 — Implementar tokens y scanner](BACKLOG.md#tl-009)
-- [ ] [TL-010 — Implementar gramática y parser](BACKLOG.md#tl-010)
-- [ ] [TL-011 — Implementar diagnósticos del frontend](BACKLOG.md#tl-011)
-- [ ] [TL-012 — Automatizar pruebas del frontend](BACKLOG.md#tl-012)
+- [ ] [TL-013 — Implementar el AST mínimo](BACKLOG.md#tl-013)
+- [ ] [TL-014 — Implementar el modelo de agenda](BACKLOG.md#tl-014)
+- [ ] [TL-015 — Validar horas e intervalos](BACKLOG.md#tl-015)
+- [ ] [TL-016 — Validar identificadores y cancelaciones](BACKLOG.md#tl-016)
+- [ ] [TL-017 — Validar superposiciones](BACKLOG.md#tl-017)
+- [ ] [TL-018 — Integrar diagnósticos semánticos](BACKLOG.md#tl-018)
 
 El resto del trabajo permanece priorizado en
 [`BACKLOG.md`](BACKLOG.md); no se reproduce aquí para evitar dos fuentes de
@@ -44,7 +50,7 @@ estado.
 
 ## Actividades bloqueadas
 
-No hay tareas bloqueadas. Sprint 2 no fue iniciado.
+No hay tareas bloqueadas. Sprint 3 no fue iniciado.
 
 ## Entorno verificado
 
@@ -57,76 +63,78 @@ No hay tareas bloqueadas. Sprint 2 no fue iniciado.
 | GCC | 15.2.0 | Paquete `gcc` de Scoop. |
 | GNU Make | 4.4.1 | Paquete `make` de Scoop. |
 
-Instalación realizada:
+No se incorporaron herramientas ni dependencias adicionales en Sprint 2.
 
-```powershell
-scoop install gcc make winflexbison
-```
-
-No se declara otro sistema como verificado.
-
-## Evidencia del Sprint 1
+## Evidencia del Sprint 2
 
 | Comando o comprobación | Resultado real |
 |---|---|
-| `make clean && make` | Aprobado; Bison y Flex generaron sus fuentes, GCC compiló sin advertencias y enlazó `bin/turnolang.exe`. |
-| `./bin/turnolang examples/smoke_agenda.tl` | Aprobado; mensaje de análisis mínimo correcto y código 0. |
-| Cabecera temporal sin `;` | Aprobado; Bison la rechazó y el proceso devolvió código no cero. |
-| `./bin/turnolang examples/no_existe.tl` | Aprobado; diagnóstico claro y código 1. |
-| Dos ejecuciones consecutivas de `make` | Aprobado; ambas informaron que no había trabajo por realizar. |
-| `make clean` y comprobación de rutas | Aprobado; eliminó `build/` y `bin/` y preservó fuentes, ejemplo y script. |
-| `make -j2` desde limpio | Aprobado; construcción paralela finalizada con código 0. |
-| `make test` después de recompilar | Aprobado; cinco pruebas mínimas y código final 0. |
+| `make clean && make` | Aprobado; generación y compilación sin advertencias normales ni conflictos Bison. |
+| `make test` | Aprobado; 5 regresiones del Sprint 1 y 21 escenarios del Sprint 2. |
+| Programas con las cinco instrucciones | Aprobado; código 0 y confirmación del frontend. |
+| `25:70`, agenda vacía e intervalo invertido | Aprobado; aceptados como sintaxis válida, sin anticipar semántica. |
+| Cuatro formas de hora incorrecta | Aprobado; error léxico completo y línea 3. |
+| Símbolo desconocido y cadena sin cierre | Aprobado; error léxico sin diagnóstico sintáctico duplicado. |
+| Identificadores válidos e inválidos | Aprobado; letras/guion bajo aceptados y comienzo numérico/guion rechazados. |
+| Cinco estructuras inválidas y palabra en minúsculas | Aprobado; error sintáctico y línea correcta. |
+| Revisión de propiedad de cadenas, ID y horas | Aprobado; acciones liberan reducciones, `%destructor` cubre descartes y `yylex_destroy` libera el scanner. |
 
 ## Problemas encontrados
 
-GNU Make define `CC=cc` de forma predeterminada. La asignación inicial
-`CC ?= gcc` no la reemplazó y la primera compilación falló porque `cc` no existe
-en el entorno verificado. Se corrigió el Makefile a `CC = gcc`, que sigue
-permitiendo una sobrescritura desde la línea de comandos y usa GCC por defecto.
+1. Los horarios mal formados podían fragmentarse en tokens válidos más pequeños.
+   Se resolvió ubicando la regla `HH:MM` antes de un candidato numérico amplio:
+   la coincidencia más larga captura completos `9:30`, `09-30`, `09:3` y
+   `09:300`, mientras `25:70` conserva el token de hora.
+2. Al faltar `;` antes de EOF, `yylineno` podía apuntar a la línea posterior al
+   último salto. Se conserva `lexer_token_line` para atribuir el error al último
+   token significativo.
+3. El `-fanalyzer` disponible emitió advertencias en las implementaciones
+   generadas por Flex/Bison, no en los módulos propios, y este MinGW no incluye
+   AddressSanitizer. Se realizó revisión de propiedad explícita y se agregó
+   `yylex_destroy`; la compilación normal permanece sin advertencias.
 
-No quedaron problemas abiertos para Sprint 1.
+No quedaron problemas abiertos para Sprint 2.
 
 ## Riesgos identificados
 
 | Riesgo | Impacto | Mitigación / señal de control |
 |---|---|---|
-| Flex divide una hora mal formada en varios lexemas durante Sprint 2. | Clasificaría mal un error léxico como sintáctico. | Implementar captura específica y el caso `error_hora_formato.tl` en TL-009/TL-012. |
-| Las acciones de Bison incorporan reglas de agenda. | Mezcla fases y duplica lógica. | En Sprint 2, limitar acciones al reconocimiento; AST y semántica pertenecen a Sprint 3. |
-| Se asume compatibilidad fuera del entorno probado. | La construcción puede no ser reproducible. | Mantener el README limitado a Windows 11 + Git Bash + Scoop hasta verificar otro entorno. |
-| El estado cambia antes de completar la validación futura. | Una instrucción fallida dejaría efectos parciales. | Mantener el contrato validar-sin-mutar y ejecutar-después en Sprint 3/4. |
+| El AST toma propiedad sin ajustar las liberaciones actuales. | Doble liberación o pérdida de valores en Sprint 3. | Definir el traspaso de propiedad en TL-013 antes de cambiar acciones Bison. |
+| Las acciones de Bison incorporan reglas de agenda. | Mezcla fases y duplica lógica. | Limitar acciones futuras a construcción del AST; semántica va en módulos C. |
+| Una validación semántica modifica estado antes de terminar. | Una sentencia inválida deja efectos parciales. | Mantener el contrato validar-sin-mutar y ejecutar después. |
+| Se asume compatibilidad fuera del entorno probado. | La construcción puede no ser reproducible. | Mantener el README limitado a Windows 11 + Git Bash + Scoop. |
 | Se redacta el informe con resultados previstos. | Incumple honestidad académica. | TL-028 continúa dependiendo de las pruebas ejecutadas de TL-025. |
 
 ## Decisiones relevantes
 
 | Decisión | Justificación | Consecuencia |
 |---|---|---|
-| Interpretar en lugar de generar código. | El dominio pide efectos y consultas inmediatas; mantiene un backend demostrable y acotado. | La salida de consola es resultado, no lenguaje destino. |
-| Usar Flex y Bison. | Son requisitos explícitos y hacen visibles lexer, parser y acciones. | El Makefile genera primero `parser.h`, requerido por el scanner. |
-| Mantener Sprint 1 como subconjunto temporal. | Su objetivo es demostrar integración, no adelantar el frontend completo. | Solo se reconocen `AGENDA`, cadena y `;`. |
-| Generar artefactos en `build/` y ejecutable en `bin/`. | Separa fuentes de productos y permite limpieza segura. | Ambos directorios están ignorados por Git y se recrean con Make. |
-| Mantener un AST mínimo en Sprint 3. | Separa frontend/backend y conserva el orden sin una jerarquía compleja. | Sprint 1 no construye AST. |
-| Usar intervalos `[inicio, fin)`. | Permite reservas consecutivas sin un caso especial. | La intersección futura usará dos desigualdades estrictas. |
+| Palabras reservadas antes de `IDENT`. | Flex resuelve empates por orden de regla. | Mayúsculas producen tokens reservados; minúsculas permanecen identificadores. |
+| Candidato numérico después de `HORA`. | Evita fragmentar horarios incorrectos sin rechazar `25:70`. | Forma y rango permanecen en etapas distintas. |
+| Valores textuales para ID, cadena y hora. | Prepara el contrato para el AST futuro. | Flex reserva; Bison libera hoy y transferirá propiedad en Sprint 3. |
+| Lista recursiva con `%empty`. | Traduce `sentencia*` sin ambigüedad ni advertencias. | La cabecera sigue siendo obligatoria y única. |
+| Suprimir `yyerror` tras fallo léxico. | Evita dos diagnósticos de etapas diferentes para un mismo fragmento. | El primer error relevante detiene el procesamiento. |
+| Mantener scripts separados por sprint. | Conserva evidencia de regresión y hace legible el crecimiento. | `make test` ejecuta smoke y frontend en orden. |
 
 ## Registro breve de avances
 
 | Fecha | Avance | Evidencia / resultado |
 |---|---|---|
 | 2026-10-09 | Revisión de la propuesta inicial y cierre de decisiones de diseño. | Roadmap, guía de estudio y seguimiento Scrum creados. |
-| 2026-10-29 | Verificación e instalación del entorno técnico. | Versiones reales registradas; TL-005 completada y Sprint 0 cerrado. |
-| 2026-10-29 | Implementación de la base técnica. | Fuentes Flex/Bison/C, Makefile, ejemplo, script smoke y README creados. |
-| 2026-10-29 | Verificación del Sprint 1. | Construcción limpia, incremental y paralela; pruebas mínimas aprobadas; TL-006 a TL-008 completadas. |
+| 2026-10-29 | Verificación e implementación de Sprint 1. | Cadena Flex/Bison/GCC/Make y cinco pruebas smoke. |
+| 2026-10-29 | Implementación del scanner y parser completos. | Siete palabras reservadas, tres tokens con valor y cuatro clases de sentencia. |
+| 2026-10-29 | Verificación de Sprint 2. | 26 pruebas acumuladas, diagnóstico por etapa/línea y compilación limpia. |
 
-## Retrospectiva — Sprint 1
+## Retrospectiva — Sprint 2
 
-- **Qué funcionó:** cerrar primero el entorno y declarar dependencias explícitas
-  permitió comprobar la cadena Flex → Bison → GCC de punta a punta.
-- **Qué dificultades aparecieron:** la variable incorporada `CC=cc` prevaleció
-  sobre una asignación condicional del Makefile.
-- **Qué debe mejorarse:** mantener en los siguientes sprints una prueba pequeña
-  por cada token o producción incorporada y ejecutar siempre desde limpio.
-- **Qué continúa en el próximo sprint:** TL-009 a TL-012, sin iniciar todavía
-  AST, reglas semánticas ni operaciones de agenda.
+- **Qué funcionó:** mantener casos separados por etapa permitió comprobar que un
+  error léxico no se informara además como sintáctico.
+- **Qué dificultades aparecieron:** la coincidencia más larga de Flex y la línea
+  de EOF exigieron reglas y estado explícitos.
+- **Qué debe mejorarse:** en Sprint 3, documentar la propiedad de cada puntero en
+  el AST antes de modificar las acciones que hoy liberan valores.
+- **Qué continúa en el próximo sprint:** TL-013 a TL-018, sin comenzar todavía
+  la ejecución de instrucciones del Sprint 4.
 
 ## Plantilla de retrospectiva
 

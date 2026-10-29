@@ -15,10 +15,10 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 | [TL-006](#tl-006) | Crear estructura técnica mínima | Alta | 1 | Completado |
 | [TL-007](#tl-007) | Automatizar generación y compilación | Crítica | 1 | Completado |
 | [TL-008](#tl-008) | Integrar ejecutable mínimo | Crítica | 1 | Completado |
-| [TL-009](#tl-009) | Implementar tokens y scanner | Crítica | 2 | Pendiente |
-| [TL-010](#tl-010) | Implementar gramática y parser | Crítica | 2 | Pendiente |
-| [TL-011](#tl-011) | Implementar diagnósticos del frontend | Alta | 2 | Pendiente |
-| [TL-012](#tl-012) | Automatizar pruebas del frontend | Alta | 2 | Pendiente |
+| [TL-009](#tl-009) | Implementar tokens y scanner | Crítica | 2 | Completado |
+| [TL-010](#tl-010) | Implementar gramática y parser | Crítica | 2 | Completado |
+| [TL-011](#tl-011) | Implementar diagnósticos del frontend | Alta | 2 | Completado |
+| [TL-012](#tl-012) | Automatizar pruebas del frontend | Alta | 2 | Completado |
 | [TL-013](#tl-013) | Implementar AST mínimo | Alta | 3 | Pendiente |
 | [TL-014](#tl-014) | Implementar modelo de agenda | Crítica | 3 | Pendiente |
 | [TL-015](#tl-015) | Validar horas e intervalos | Crítica | 3 | Pendiente |
@@ -155,7 +155,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-008.
 - **Criterios de aceptación:** la secuencia de tokens coincide con la
   especificación y distingue `9:00` de `25:00` según el contrato documentado.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 <a id="tl-010"></a>
 ### TL-010 — Implementar gramática y parser
@@ -167,7 +167,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-009.
 - **Criterios de aceptación:** acepta todos los ejemplos sintácticamente válidos,
   rechaza orden o elementos incorrectos y no presenta conflictos no justificados.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 <a id="tl-011"></a>
 ### TL-011 — Implementar diagnósticos del frontend
@@ -179,7 +179,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-009, TL-010.
 - **Criterios de aceptación:** un símbolo, una hora mal formada y la falta de `;`
   se clasifican correctamente y el proceso devuelve código no cero.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 <a id="tl-012"></a>
 ### TL-012 — Automatizar pruebas del frontend
@@ -191,7 +191,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-011.
 - **Criterios de aceptación:** una ejecución automatizada demuestra aceptación y
   ambos errores, incluyendo códigos de retorno.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 ## Sprint 3: estructuras internas y semántica
 

@@ -55,6 +55,7 @@ $(TARGET): $(OBJECTS) | $(BIN_DIR)
 
 test: $(TARGET)
 	bash scripts/test_smoke.sh
+	bash scripts/test_frontend.sh
 
 clean:
 	rm -rf -- $(BUILD_DIR) $(BIN_DIR)

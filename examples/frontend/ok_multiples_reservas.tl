@@ -1,0 +1,7 @@
+AGENDA "Consultorio";
+
+RESERVAR consulta_ana DESDE 09:00 HASTA 09:30;
+
+RESERVAR reunion_equipo DESDE 10:00 HASTA 10:30;
+
+RESERVAR _turno DESDE 11:00 HASTA 11:30;
