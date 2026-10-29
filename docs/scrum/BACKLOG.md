@@ -11,10 +11,10 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 | [TL-002](#tl-002) | Cerrar especificación del lenguaje | Crítica | 0 | Completado |
 | [TL-003](#tl-003) | Definir arquitectura, semántica y pruebas | Crítica | 0 | Completado |
 | [TL-004](#tl-004) | Preparar guía y seguimiento académico | Alta | 0 | Completado |
-| [TL-005](#tl-005) | Verificar entorno de herramientas | Crítica | 0 | Pendiente |
-| [TL-006](#tl-006) | Crear estructura técnica mínima | Alta | 1 | Pendiente |
-| [TL-007](#tl-007) | Automatizar generación y compilación | Crítica | 1 | Pendiente |
-| [TL-008](#tl-008) | Integrar ejecutable mínimo | Crítica | 1 | Pendiente |
+| [TL-005](#tl-005) | Verificar entorno de herramientas | Crítica | 0 | Completado |
+| [TL-006](#tl-006) | Crear estructura técnica mínima | Alta | 1 | Completado |
+| [TL-007](#tl-007) | Automatizar generación y compilación | Crítica | 1 | Completado |
+| [TL-008](#tl-008) | Integrar ejecutable mínimo | Crítica | 1 | Completado |
 | [TL-009](#tl-009) | Implementar tokens y scanner | Crítica | 2 | Pendiente |
 | [TL-010](#tl-010) | Implementar gramática y parser | Crítica | 2 | Pendiente |
 | [TL-011](#tl-011) | Implementar diagnósticos del frontend | Alta | 2 | Pendiente |
@@ -103,7 +103,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Criterios de aceptación:** todos los comandos de versión funcionan en el
   entorno objetivo y el método de instalación queda anotado sin suponer
   compatibilidad no probada.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 ## Sprint 1: compilación
 
@@ -117,7 +117,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-005.
 - **Criterios de aceptación:** la estructura distingue fuentes, generados,
   ejemplos y scripts y cada archivo tiene una responsabilidad documentada.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 <a id="tl-007"></a>
 ### TL-007 — Automatizar generación y compilación
@@ -129,7 +129,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-005, TL-006.
 - **Criterios de aceptación:** `make` desde una limpieza genera archivos en el
   orden correcto, y `make clean` elimina solo artefactos generados.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 <a id="tl-008"></a>
 ### TL-008 — Integrar un ejecutable mínimo
@@ -141,7 +141,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-007.
 - **Criterios de aceptación:** el ejecutable se construye sin errores ni
   advertencias relevantes y procesa una entrada mínima documentada.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 ## Sprint 2: análisis léxico y sintáctico
 
