@@ -1,0 +1,3 @@
+AGENDA "Consultorio";
+
+RESERVAR dia DESDE 00:00 HASTA 23:59;

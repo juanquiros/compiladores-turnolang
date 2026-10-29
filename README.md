@@ -1,13 +1,14 @@
 # TurnoLang
 
 TurnoLang es un lenguaje específico de dominio para describir operaciones sobre
-la agenda diaria de un único recurso. El proyecto es un Trabajo Práctico
-Integrador de Compiladores y busca mostrar, de forma pequeña y verificable, las
-etapas de procesamiento de un lenguaje.
+la agenda diaria de un único recurso. Es un Trabajo Práctico Integrador de
+Compiladores y permite observar, en un proyecto acotado, las etapas que procesan
+un lenguaje.
 
-La versión actual corresponde al Sprint 2: implementa el frontend léxico y
-sintáctico completo. Reconoce programas TurnoLang, pero todavía no construye un
-AST, valida reglas de agenda ni ejecuta instrucciones.
+La versión actual corresponde al Sprint 3. Implementa el frontend completo,
+construye un AST y valida el significado de las instrucciones contra un estado
+temporal de agenda. Todavía no ejecuta el backend visible: no muestra reservas,
+disponibilidad ni listados.
 
 ## Instrucciones reconocidas
 
@@ -19,88 +20,71 @@ CANCELAR turno1;
 LISTAR;
 ```
 
-`AGENDA` es una cabecera obligatoria y única. Después pueden aparecer cero o más
-sentencias `RESERVAR`, `CANCELAR`, `LIBRE` o `LISTAR`.
+`AGENDA` es obligatoria y única. Después pueden aparecer cero o más sentencias
+`RESERVAR`, `CANCELAR`, `LIBRE` o `LISTAR`.
 
 ## Tecnologías
 
-- **C:** implementa el programa principal y la integración con el frontend.
+- **C:** implementa AST, estado de agenda, semántica y programa principal.
 - **Flex:** genera el scanner que transforma caracteres en tokens.
-- **Bison:** genera el parser que comprueba la gramática.
-- **GCC:** compila el código C propio y el generado.
-- **GNU Make:** declara dependencias y automatiza generación, compilación,
-  pruebas y limpieza.
+- **Bison:** genera el parser que comprueba la gramática y construye el AST.
+- **GCC:** compila el código propio y el generado.
+- **GNU Make:** automatiza generación, compilación, pruebas y limpieza.
 
 ## Arquitectura implementada
 
 ```text
 Archivo .tl
-    |
-    v
-Flex (src/lexer.l)
-    |
-    v
-Tokens y valores textuales
-    |
-    v
-Bison (src/parser.y)
-    |
-    v
-Aceptación o diagnóstico del frontend
+    ↓
+Flex / lexer.l
+    ↓ tokens y valores
+Bison / parser.y
+    ↓
+AST mínimo
+    ↓
+Análisis semántico
+    ↓
+Programa válido o diagnóstico
 ```
 
-`src/main.c` abre el archivo y configura `yyin`. Luego llama a `yyparse`, la
-función generada por Bison. Mientras analiza, `yyparse` solicita tokens a
-`yylex`, la función generada por Flex. El código de retorno y la marca
-`lexer_had_error` permiten distinguir una ejecución correcta de un fallo.
+`main.c` abre el archivo y llama a `yyparse`. Bison solicita tokens a `yylex` y,
+si acepta todo el archivo, entrega `programa_analizado`. En modo normal, `main`
+envía ese AST a `semantica_validar_programa`. En todos los caminos se liberan
+scanner, archivo, AST y estado temporal.
 
-Las confirmaciones se escriben en `stdout`; los diagnósticos se escriben en
-`stderr`.
+Las confirmaciones se escriben en `stdout`; los errores, en `stderr`.
 
 ## Análisis léxico con Flex
 
-Un **token** es una categoría asignada a un lexema concreto. Por ejemplo,
-`turno1` es un lexema de la categoría `TOK_IDENT`.
+Un **token** es la categoría asignada a un lexema. Por ejemplo, `turno1` es un
+lexema de la categoría `TOK_IDENT`.
 
-El archivo `src/lexer.l` reconoce:
+`src/lexer.l` reconoce:
 
 | Categoría | Forma o lexema |
 |---|---|
 | Palabras reservadas | `AGENDA`, `RESERVAR`, `CANCELAR`, `DESDE`, `HASTA`, `LIBRE`, `LISTAR` |
 | `TOK_IDENT` | `[A-Za-z_][A-Za-z0-9_]*` |
-| `TOK_CADENA` | Texto entre comillas dobles, sin escapes ni saltos de línea |
+| `TOK_CADENA` | Texto entre comillas, sin escapes ni saltos de línea |
 | `TOK_HORA` | `[0-9]{2}:[0-9]{2}` |
 | `TOK_PUNTO_Y_COMA` | `;` |
 
-Las palabras reservadas son sensibles a mayúsculas. Por eso `RESERVAR` produce
-el token reservado, mientras que `reservar` produce `TOK_IDENT`.
+Las reservadas distinguen mayúsculas. `RESERVAR` produce el token reservado;
+`reservar` es un identificador y será rechazado sintácticamente si aparece donde
+se espera una instrucción.
 
-### Horarios mal formados
+La regla de `HH:MM` aparece antes de un candidato numérico amplio. Por la
+coincidencia más larga de Flex, `9:30`, `09:3`, `09-30` y `09:300` se informan
+completos como errores léxicos. `25:70` sí produce `TOK_HORA`: tiene la forma
+correcta y su rango se rechaza después, durante la semántica.
 
-La regla de hora válida aparece antes de una regla amplia para candidatos
-numéricos. Flex elige primero la coincidencia más larga y, ante igual longitud,
-la regla escrita antes. Así:
-
-- `25:70` tiene forma `HH:MM` y produce `TOK_HORA`; su rango se validará en el
-  Sprint 3;
-- `9:30`, `09:3`, `09-30` y `09:300` coinciden completos con la regla de error y
-  se informan como horarios mal formados; y
-- no se fragmentan silenciosamente en varios tokens.
-
-El scanner también detecta cadenas sin cierre y cualquier carácter desconocido.
-Todos los errores léxicos incluyen etapa, línea, motivo y fragmento encontrado.
-
-### Propiedad de los valores
-
-Flex reserva una copia dinámica para cadenas, identificadores y horarios. En una
-reducción correcta, la acción correspondiente de Bison libera esos valores. Si
-el parser descarta un token por un error, `%destructor` lo libera. En este sprint
-los datos no se conservan porque el AST pertenece al Sprint 3.
+Con `%locations`, cada token entrega su línea a Bison. No se siguen columnas
+porque no son necesarias para los diagnósticos actuales.
 
 ## Análisis sintáctico con Bison
 
 Una **producción gramatical** describe una estructura válida de tokens. Bison
-implementa estas producciones:
+implementa:
 
 ```ebnf
 programa       ::= cabecera sentencia* EOF ;
@@ -112,63 +96,169 @@ disponibilidad ::= LIBRE DESDE HORA HASTA HORA ";" ;
 listado        ::= LISTAR ";" ;
 ```
 
-La repetición se representa en `src/parser.y` mediante una lista recursiva con
-`%empty`. Reconocer una instrucción significa comprobar que sus tokens aparecen
-en el orden de una producción; todavía no significa ejecutarla.
+La repetición usa una lista recursiva con `%empty`. Las acciones no validan
+reglas de agenda: crean nodos del AST y transfieren los textos producidos por
+Flex.
 
-Por ejemplo:
+## AST mínimo
+
+AST significa **árbol de sintaxis abstracta**. En TurnoLang se implementa como
+un programa y una lista enlazada de instrucciones; no se necesita una jerarquía
+genérica de árboles.
+
+`src/ast.h` define:
+
+- `Programa`: nombre, línea de `AGENDA` y lista en orden;
+- `TipoInstruccion`: reserva, cancelación, disponibilidad o listado;
+- `Instruccion`: tipo, línea, unión con sus datos y enlace siguiente; y
+- `ListaInstrucciones`: punteros al primer y último nodo.
+
+Ejemplo conceptual:
+
+```text
+Instruccion
+├── tipo: INSTRUCCION_RESERVA
+├── linea: 3
+├── identificador: "turno1"
+├── inicio: "09:00"
+└── fin: "09:30"
+```
+
+Mantener el último nodo permite agregar instrucciones sin invertir el orden ni
+recorrer nuevamente la lista.
+
+## Estado interno de agenda
+
+`src/agenda.c` mantiene una lista de reservas con identificador, minutos de
+inicio/fin y marca activa. Este estado existe únicamente durante el análisis
+semántico.
+
+Las operaciones disponibles son:
+
+- buscar una reserva activa por identificador;
+- agregar una reserva ya validada;
+- cancelar una reserva activa;
+- buscar una intersección; y
+- liberar todo el estado.
+
+Una reserva cancelada permanece inactiva en el estado, por lo que el mismo ID
+puede usarse después en una reserva nueva. No hay persistencia ni salida
+funcional.
+
+## Análisis semántico
+
+`src/semantica.c` recorre el AST en orden. Para cada nodo primero ejecuta una
+validación que no modifica la agenda; solo si es correcta aplica el cambio
+temporal necesario para validar instrucciones posteriores.
+
+### Horas e intervalos
+
+Una hora se convierte mediante:
+
+```text
+minutos = HH × 60 + MM
+```
+
+Se exige `00 ≤ HH ≤ 23`, `00 ≤ MM ≤ 59` e `inicio < fin`. Se distinguen hora
+fuera de rango, intervalo vacío e intervalo invertido.
+
+### Identificadores y cancelaciones
+
+- reservar un ID activo es error;
+- cancelar exige una reserva activa; y
+- después de cancelar, el ID puede reutilizarse.
+
+### Superposición
+
+Los intervalos son semiabiertos `[inicio, fin)`. La única función de
+intersección evalúa:
+
+```c
+inicio_nuevo < fin_existente && fin_nuevo > inicio_existente
+```
+
+Detecta cruces parciales y contención. Dos reservas consecutivas son válidas.
+`LIBRE` reutiliza la consulta de intersección, pero un intervalo ocupado no es
+error semántico: el resultado `OCUPADO` se mostrará recién en Sprint 4.
+
+### Nombre de agenda
+
+Una cadena vacía es sintácticamente válida, pero el análisis semántico rechaza
+`AGENDA "";`.
+
+## Ejemplo de punta a punta
+
+Para:
 
 ```text
 RESERVAR turno1 DESDE 09:00 HASTA 09:30;
 ```
 
-Flex entrega:
+1. Flex produce `TOK_RESERVAR`, `TOK_IDENT`, `TOK_DESDE`, dos `TOK_HORA`,
+   `TOK_HASTA` y `TOK_PUNTO_Y_COMA`.
+2. Bison reduce la producción `reserva`.
+3. La acción transfiere ID y horas a un nodo con la línea de `RESERVAR`.
+4. Semántica convierte `09:00` y `09:30` a 540 y 570 minutos.
+5. Comprueba que el intervalo esté ordenado.
+6. Busca un ID activo y una reserva superpuesta.
+7. Si todo es válido, incorpora la reserva al estado temporal.
 
-```text
-TOK_RESERVAR TOK_IDENT TOK_DESDE TOK_HORA
-TOK_HASTA TOK_HORA TOK_PUNTO_Y_COMA
+El último paso permite validar sentencias posteriores; todavía no imprime una
+confirmación ni constituye la ejecución visible del intérprete.
+
+## Propiedad y liberación de memoria
+
+- Flex reserva cadenas, identificadores y horarios.
+- Un nodo AST toma su propiedad cuando el constructor tiene éxito.
+- `%destructor` libera tokens, instrucciones o listas descartados por Bison.
+- El símbolo inicial aceptado se transfiere a `programa_analizado` y `main` lo
+  libera exactamente una vez.
+- La agenda copia los identificadores que necesita y libera sus reservas al
+  terminar la validación.
+- `yylex_destroy` libera los buffers internos del scanner.
+
+Las pruebas incluyen errores después de construir una lista AST no vacía para
+ejercitar los destructores. El entorno MinGW verificado no incluye Valgrind ni
+AddressSanitizer; se realizó revisión de propiedad y pruebas de rutas de éxito y
+error.
+
+## Modos de ejecución
+
+### Análisis completo
+
+```bash
+./bin/turnolang examples/semantica/ok_programa.tl
 ```
 
-Bison comprueba que esa secuencia coincide con la producción `reserva` y libera
-los valores textuales. No agrega una reserva a ninguna agenda.
-
-## Sintaxis y semántica
-
-Una construcción puede ser sintácticamente válida y semánticamente incorrecta.
-El frontend acepta deliberadamente:
+Salida:
 
 ```text
-AGENDA "";
-RESERVAR turno1 DESDE 25:70 HASTA 10:00;
-RESERVAR turno2 DESDE 11:00 HASTA 09:00;
+TurnoLang
+Análisis léxico y sintáctico: correcto.
+Análisis semántico: correcto.
+Interpretación: pendiente.
 ```
 
-Las tres respetan la forma del lenguaje. Nombre vacío, rango horario e intervalo
-invertido se validarán en el Sprint 3. Este frontend tampoco detecta duplicados,
-superposiciones ni cancelaciones inexistentes.
+### Solo sintaxis
+
+```bash
+./bin/turnolang --solo-sintaxis examples/frontend/ok_hora_fuera_rango.tl
+```
+
+Construye y libera el AST, pero omite semántica. Este modo conserva las pruebas
+del frontend y demuestra que `25:70` es una hora léxica/sintácticamente válida.
 
 ## Diagnósticos
 
-Un error léxico se produce cuando un fragmento no puede convertirse en un token
-válido:
+Los errores informan etapa, línea y motivo. Por ejemplo:
 
 ```text
-Error léxico en línea 3:
-Horario mal formado: '9:30'.
+Error semántico en línea 5:
+La reserva 'turno2' se superpone con 'turno1'.
 ```
 
-Un error sintáctico se produce cuando los tokens existen, pero no respetan una
-producción:
-
-```text
-Error sintáctico en línea 3:
-La entrada no respeta la gramática (...).
-```
-
-El scanner conserva la línea del último token. Esto permite que una falta de
-`;` al final del archivo se atribuya a la instrucción que quedó incompleta y no
-a una línea vacía posterior. Un error léxico suprime el mensaje sintáctico
-secundario para no mezclar etapas.
+El primer error relevante detiene el procesamiento. Un error léxico no genera
+además un mensaje sintáctico, y la semántica no comienza si falló el frontend.
 
 ## Entorno verificado
 
@@ -182,20 +272,15 @@ La compilación y las pruebas se verificaron en Windows 11 con Git Bash y:
 
 No se declara compatibilidad con otros entornos hasta verificarlos.
 
-### Instalación en el entorno verificado
+### Instalación
 
-1. Instalar [Git for Windows](https://gitforwindows.org/) para disponer de Git
-   Bash.
-2. Instalar [Scoop](https://scoop.sh/) siguiendo su documentación oficial.
-3. Desde PowerShell, instalar las herramientas:
+Instalar Git for Windows y Scoop. Desde PowerShell:
 
 ```powershell
 scoop install gcc make winflexbison
 ```
 
-4. Cerrar y volver a abrir Git Bash para que reciba el `PATH` actualizado.
-
-Los comandos siguientes se ejecutan desde Git Bash, en la raíz del repositorio.
+Cerrar y abrir Git Bash antes de ejecutar los comandos siguientes.
 
 ## Compilación
 
@@ -203,27 +288,10 @@ Los comandos siguientes se ejecutan desde Git Bash, en la raíz del repositorio.
 make
 ```
 
-Make crea `build/` y `bin/` cuando son necesarios. Bison genera
-`build/parser.c` y `build/parser.h`; Flex genera `build/lexer.c`; GCC compila
-esos archivos y `src/main.c`, y enlaza `bin/turnolang.exe`.
-
-La dependencia de `build/lexer.c` respecto de `build/parser.h` garantiza que
-Bison defina los tokens antes de generar y compilar el scanner. Una segunda
-ejecución de `make` sin cambios no reconstruye archivos.
-
-## Ejecución
-
-```bash
-./bin/turnolang examples/frontend/ok_todas_instrucciones.tl
-```
-
-Salida esperada:
-
-```text
-TurnoLang
-Análisis léxico y sintáctico: correcto.
-Semántica e interpretación: pendientes.
-```
+Bison genera `build/parser.c` y `build/parser.h`; Flex genera
+`build/lexer.c`; GCC compila módulos propios y generados y enlaza
+`bin/turnolang.exe`. Las dependencias admiten construcción incremental y
+paralela.
 
 ## Pruebas
 
@@ -231,17 +299,14 @@ Semántica e interpretación: pendientes.
 make test
 ```
 
-El objetivo ejecuta dos scripts:
+Se ejecutan:
 
-- `scripts/test_smoke.sh` mantiene las cinco regresiones del Sprint 1; y
-- `scripts/test_frontend.sh` comprueba veintiún escenarios del Sprint 2.
+- 5 pruebas smoke del Sprint 1;
+- 23 pruebas del frontend en modo `--solo-sintaxis`; y
+- 21 pruebas semánticas del Sprint 3.
 
-Las pruebas capturan `stdout` y `stderr`, verifican códigos de salida,
-clasificación y líneas. Cubren programas válidos, errores de horario, símbolo y
-cadena, errores de estructura y entradas semánticamente inválidas que todavía
-deben aceptarse.
-
-Los archivos se encuentran en `examples/frontend/`.
+Las 49 pruebas acumuladas comprueban códigos, flujos separados, etapa, línea,
+motivo, aceptación válida y ausencia de resultados funcionales adelantados.
 
 ## Limpieza
 
@@ -249,28 +314,28 @@ Los archivos se encuentran en `examples/frontend/`.
 make clean
 ```
 
-Elimina únicamente `build/` y `bin/`, que contienen generados, objetos y el
-ejecutable. No elimina fuentes, ejemplos, scripts ni documentación.
+Elimina solo `build/` y `bin/`. No elimina fuentes, ejemplos, scripts ni
+documentación.
 
 ## Estado
 
-Implementado y verificado hasta Sprint 2:
+Implementado y verificado hasta Sprint 3:
 
-- scanner Flex completo;
-- parser Bison para toda la gramática;
-- clasificación básica de errores léxicos y sintácticos;
-- manejo de valores textuales y descarte seguro;
-- compilación limpia, incremental y paralela con Make; y
-- 26 pruebas automatizadas acumuladas.
+- scanner y parser completos;
+- AST mínimo ordenado con ubicaciones;
+- estado temporal de reservas;
+- horas, intervalos, IDs, cancelaciones y superposiciones;
+- diagnósticos léxicos, sintácticos y semánticos; y
+- pruebas acumuladas de los tres sprints técnicos.
 
-Pendiente para sprints posteriores:
+Pendiente para Sprint 4:
 
-- AST mínimo del programa;
-- análisis semántico de nombres, horarios e intervalos;
-- estado de reservas y reglas de superposición;
-- intérprete y resultados de agenda; y
-- batería integral final e informe LNCS.
+- ejecución secuencial visible;
+- confirmaciones de reserva y cancelación;
+- resultados `DISPONIBLE`/`OCUPADO`;
+- listado ordenado de reservas activas; y
+- contrato final de salidas y códigos.
 
-La especificación técnica completa está en
-[`docs/PROPUESTA_ROADMAP.md`](docs/PROPUESTA_ROADMAP.md) y la explicación de los
-conceptos en [`docs/GUIA_ESTUDIO.md`](docs/GUIA_ESTUDIO.md).
+La especificación completa está en
+[`docs/PROPUESTA_ROADMAP.md`](docs/PROPUESTA_ROADMAP.md) y la guía conceptual en
+[`docs/GUIA_ESTUDIO.md`](docs/GUIA_ESTUDIO.md).

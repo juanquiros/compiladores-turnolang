@@ -19,12 +19,12 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 | [TL-010](#tl-010) | Implementar gramática y parser | Crítica | 2 | Completado |
 | [TL-011](#tl-011) | Implementar diagnósticos del frontend | Alta | 2 | Completado |
 | [TL-012](#tl-012) | Automatizar pruebas del frontend | Alta | 2 | Completado |
-| [TL-013](#tl-013) | Implementar AST mínimo | Alta | 3 | Pendiente |
-| [TL-014](#tl-014) | Implementar modelo de agenda | Crítica | 3 | Pendiente |
-| [TL-015](#tl-015) | Validar horas e intervalos | Crítica | 3 | Pendiente |
-| [TL-016](#tl-016) | Validar identificadores y cancelaciones | Crítica | 3 | Pendiente |
-| [TL-017](#tl-017) | Validar superposiciones | Crítica | 3 | Pendiente |
-| [TL-018](#tl-018) | Integrar diagnósticos semánticos | Alta | 3 | Pendiente |
+| [TL-013](#tl-013) | Implementar AST mínimo | Alta | 3 | Completado |
+| [TL-014](#tl-014) | Implementar modelo de agenda | Crítica | 3 | Completado |
+| [TL-015](#tl-015) | Validar horas e intervalos | Crítica | 3 | Completado |
+| [TL-016](#tl-016) | Validar identificadores y cancelaciones | Crítica | 3 | Completado |
+| [TL-017](#tl-017) | Validar superposiciones | Crítica | 3 | Completado |
+| [TL-018](#tl-018) | Integrar diagnósticos semánticos | Alta | 3 | Completado |
 | [TL-019](#tl-019) | Implementar recorrido secuencial | Crítica | 4 | Pendiente |
 | [TL-020](#tl-020) | Ejecutar reservas y cancelaciones | Crítica | 4 | Pendiente |
 | [TL-021](#tl-021) | Ejecutar disponibilidad | Alta | 4 | Pendiente |
@@ -205,7 +205,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-010.
 - **Criterios de aceptación:** todas las instrucciones conservan valores y línea,
   el orden fuente es estable y los caminos de éxito/error liberan memoria.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 <a id="tl-014"></a>
 ### TL-014 — Implementar el modelo de agenda
@@ -217,7 +217,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-013.
 - **Criterios de aceptación:** el estado admite agregar, localizar, desactivar,
   recorrer y liberar reservas mediante una interfaz pequeña.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 <a id="tl-015"></a>
 ### TL-015 — Validar horas e intervalos
@@ -229,7 +229,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-013.
 - **Criterios de aceptación:** límites válidos, valor fuera de rango, intervalo
   vacío e invertido tienen resultados unitarios o integrados verificables.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 <a id="tl-016"></a>
 ### TL-016 — Validar identificadores y cancelaciones
@@ -241,7 +241,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-014.
 - **Criterios de aceptación:** los tres comportamientos coinciden con la
   especificación y no se altera estado ante rechazo.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 <a id="tl-017"></a>
 ### TL-017 — Validar superposiciones
@@ -253,7 +253,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-014, TL-015.
 - **Criterios de aceptación:** detecta cruces parciales y contención, acepta
   intervalos consecutivos y no duplica el algoritmo.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 <a id="tl-018"></a>
 ### TL-018 — Integrar diagnósticos semánticos
@@ -265,7 +265,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-015, TL-016, TL-017.
 - **Criterios de aceptación:** cada regla fallida tiene diagnóstico distinguible,
   código no cero y estado intacto para la sentencia rechazada.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 ## Sprint 4: intérprete completo
 

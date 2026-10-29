@@ -4,18 +4,19 @@
 
 | Campo | Estado basado en evidencia |
 |---|---|
-| Sprint actual | Sprint 2 — Análisis léxico y sintáctico, finalizado |
-| Estado general | Frontend completo y verificable. Semántica, AST e interpretación todavía pendientes. |
-| Progreso del backlog | 12 tareas completadas, 18 pendientes, 0 en progreso, 0 bloqueadas. |
-| Próximo objetivo | Iniciar Sprint 3 con TL-013: construir el AST mínimo sin ejecutar todavía instrucciones. |
+| Sprint actual | Sprint 3 — Estructuras internas y semántica, finalizado |
+| Estado general | AST y análisis semántico completos. La ejecución visible del intérprete permanece pendiente. |
+| Progreso del backlog | 18 tareas completadas, 12 pendientes, 0 en progreso, 0 bloqueadas. |
+| Próximo objetivo | Iniciar Sprint 4 con TL-019: recorrer y ejecutar el AST sin duplicar las validaciones existentes. |
 
 ## Cierre de sprints
 
 | Sprint | Estado | Evidencia de cierre |
 |---|---|---|
-| Sprint 0 — Definición y preparación | Completado | Documentación revisada y cadena de herramientas verificada. |
+| Sprint 0 — Definición y preparación | Completado | Diseño, guía, trazabilidad y herramientas verificadas. |
 | Sprint 1 — Compilación | Completado | Construcción reproducible, ejecutable mínimo y cinco pruebas smoke. |
-| Sprint 2 — Análisis léxico y sintáctico | Completado | Gramática completa, diagnósticos por etapa y línea, 21 casos nuevos y cinco regresiones aprobadas. |
+| Sprint 2 — Análisis léxico y sintáctico | Completado | Frontend completo, diagnósticos por etapa/línea y 23 pruebas de frontend. |
+| Sprint 3 — Estructuras internas y semántica | Completado | AST ordenado, agenda temporal, seis reglas semánticas del backlog y 21 pruebas nuevas. |
 
 ## Actividades completadas
 
@@ -31,18 +32,23 @@
 - [x] [TL-010 — Implementar gramática y parser](BACKLOG.md#tl-010)
 - [x] [TL-011 — Implementar diagnósticos del frontend](BACKLOG.md#tl-011)
 - [x] [TL-012 — Automatizar pruebas del frontend](BACKLOG.md#tl-012)
+- [x] [TL-013 — Implementar el AST mínimo](BACKLOG.md#tl-013)
+- [x] [TL-014 — Implementar el modelo de agenda](BACKLOG.md#tl-014)
+- [x] [TL-015 — Validar horas e intervalos](BACKLOG.md#tl-015)
+- [x] [TL-016 — Validar identificadores y cancelaciones](BACKLOG.md#tl-016)
+- [x] [TL-017 — Validar superposiciones](BACKLOG.md#tl-017)
+- [x] [TL-018 — Integrar diagnósticos semánticos](BACKLOG.md#tl-018)
 
-Los completados del Sprint 2 acreditan reconocimiento y clasificación del
-frontend. No acreditan validación de horarios, reglas de reservas ni ejecución.
+Los completados de Sprint 3 acreditan validación y actualización de un estado
+temporal. No acreditan todavía resultados funcionales de agenda.
 
 ## Actividades pendientes inmediatas
 
-- [ ] [TL-013 — Implementar el AST mínimo](BACKLOG.md#tl-013)
-- [ ] [TL-014 — Implementar el modelo de agenda](BACKLOG.md#tl-014)
-- [ ] [TL-015 — Validar horas e intervalos](BACKLOG.md#tl-015)
-- [ ] [TL-016 — Validar identificadores y cancelaciones](BACKLOG.md#tl-016)
-- [ ] [TL-017 — Validar superposiciones](BACKLOG.md#tl-017)
-- [ ] [TL-018 — Integrar diagnósticos semánticos](BACKLOG.md#tl-018)
+- [ ] [TL-019 — Implementar el recorrido secuencial](BACKLOG.md#tl-019)
+- [ ] [TL-020 — Ejecutar reservas y cancelaciones](BACKLOG.md#tl-020)
+- [ ] [TL-021 — Ejecutar consultas de disponibilidad](BACKLOG.md#tl-021)
+- [ ] [TL-022 — Ejecutar el listado ordenado](BACKLOG.md#tl-022)
+- [ ] [TL-023 — Estabilizar salida y códigos de proceso](BACKLOG.md#tl-023)
 
 El resto del trabajo permanece priorizado en
 [`BACKLOG.md`](BACKLOG.md); no se reproduce aquí para evitar dos fuentes de
@@ -50,7 +56,7 @@ estado.
 
 ## Actividades bloqueadas
 
-No hay tareas bloqueadas. Sprint 3 no fue iniciado.
+No hay tareas bloqueadas. Sprint 4 no fue iniciado.
 
 ## Entorno verificado
 
@@ -63,78 +69,74 @@ No hay tareas bloqueadas. Sprint 3 no fue iniciado.
 | GCC | 15.2.0 | Paquete `gcc` de Scoop. |
 | GNU Make | 4.4.1 | Paquete `make` de Scoop. |
 
-No se incorporaron herramientas ni dependencias adicionales en Sprint 2.
+No se incorporaron dependencias externas en Sprint 3. Valgrind y AddressSanitizer
+no están disponibles en este entorno MinGW.
 
-## Evidencia del Sprint 2
+## Evidencia del Sprint 3
 
 | Comando o comprobación | Resultado real |
 |---|---|
-| `make clean && make` | Aprobado; generación y compilación sin advertencias normales ni conflictos Bison. |
-| `make test` | Aprobado; 5 regresiones del Sprint 1 y 21 escenarios del Sprint 2. |
-| Programas con las cinco instrucciones | Aprobado; código 0 y confirmación del frontend. |
-| `25:70`, agenda vacía e intervalo invertido | Aprobado; aceptados como sintaxis válida, sin anticipar semántica. |
-| Cuatro formas de hora incorrecta | Aprobado; error léxico completo y línea 3. |
-| Símbolo desconocido y cadena sin cierre | Aprobado; error léxico sin diagnóstico sintáctico duplicado. |
-| Identificadores válidos e inválidos | Aprobado; letras/guion bajo aceptados y comienzo numérico/guion rechazados. |
-| Cinco estructuras inválidas y palabra en minúsculas | Aprobado; error sintáctico y línea correcta. |
-| Revisión de propiedad de cadenas, ID y horas | Aprobado; acciones liberan reducciones, `%destructor` cubre descartes y `yylex_destroy` libera el scanner. |
+| `make clean && make` | Aprobado; seis unidades de traducción propias/generadas compiladas sin advertencias normales ni conflictos Bison. |
+| `make test` | Aprobado; 5 smoke, 23 frontend y 21 semánticas: 49 pruebas acumuladas. |
+| Modo `--solo-sintaxis` | Aprobado; construye/libera AST y conserva aceptación de entradas semánticamente inválidas del Sprint 2. |
+| AST y orden | Aprobado; errores tardíos en líneas 5/7 dependen de nodos previos y se atribuyen a la instrucción correcta. |
+| Horas e intervalos | Aprobado; límites, rango, vacío e inversión clasificados como se especificó. |
+| Identificadores y cancelaciones | Aprobado; duplicado, inexistente, doble cancelación y reutilización cubiertos. |
+| Superposiciones | Aprobado; cruce parcial, ambas contenciones y reservas consecutivas cubiertos. |
+| Consulta ocupada | Aprobado; usa el estado sin producir error ni salida funcional. |
+| Propiedad de memoria | Aprobado por revisión y rutas ejecutadas; tokens, listas, AST, agenda y scanner tienen liberación definida. |
 
 ## Problemas encontrados
 
-1. Los horarios mal formados podían fragmentarse en tokens válidos más pequeños.
-   Se resolvió ubicando la regla `HH:MM` antes de un candidato numérico amplio:
-   la coincidencia más larga captura completos `9:30`, `09-30`, `09:3` y
-   `09:300`, mientras `25:70` conserva el token de hora.
-2. Al faltar `;` antes de EOF, `yylineno` podía apuntar a la línea posterior al
-   último salto. Se conserva `lexer_token_line` para atribuir el error al último
-   token significativo.
-3. El `-fanalyzer` disponible emitió advertencias en las implementaciones
-   generadas por Flex/Bison, no en los módulos propios, y este MinGW no incluye
-   AddressSanitizer. Se realizó revisión de propiedad explícita y se agregó
-   `yylex_destroy`; la compilación normal permanece sin advertencias.
+1. El primer contrato del símbolo inicial tenía un `%destructor` para
+   `Programa` y `main` también lo liberaba. Las regresiones detectaron corrupción
+   de heap. Se eliminó únicamente ese destructor: al aceptar, la propiedad se
+   transfiere a `programa_analizado`; los demás destructores continúan cubriendo
+   errores y descartes.
+2. La línea semántica no podía depender del último token global por el lookahead
+   de Bison. Se integró `%locations`; cada nodo guarda `@1.first_line` de su
+   palabra reservada.
+3. Las pruebas del Sprint 2 necesitaban conservar entradas como `25:70`. Se
+   incorporó `--solo-sintaxis`, que construye y libera el AST pero omite
+   semántica.
+4. El entorno no dispone de una herramienta dinámica de memoria. Se documentó
+   la limitación, se revisó la propiedad y se agregaron errores léxico/sintáctico
+   después de una lista AST no vacía para ejercitar liberaciones.
 
-No quedaron problemas abiertos para Sprint 2.
-
-## Riesgos identificados
-
-| Riesgo | Impacto | Mitigación / señal de control |
-|---|---|---|
-| El AST toma propiedad sin ajustar las liberaciones actuales. | Doble liberación o pérdida de valores en Sprint 3. | Definir el traspaso de propiedad en TL-013 antes de cambiar acciones Bison. |
-| Las acciones de Bison incorporan reglas de agenda. | Mezcla fases y duplica lógica. | Limitar acciones futuras a construcción del AST; semántica va en módulos C. |
-| Una validación semántica modifica estado antes de terminar. | Una sentencia inválida deja efectos parciales. | Mantener el contrato validar-sin-mutar y ejecutar después. |
-| Se asume compatibilidad fuera del entorno probado. | La construcción puede no ser reproducible. | Mantener el README limitado a Windows 11 + Git Bash + Scoop. |
-| Se redacta el informe con resultados previstos. | Incumple honestidad académica. | TL-028 continúa dependiendo de las pruebas ejecutadas de TL-025. |
+No quedaron problemas abiertos para Sprint 3.
 
 ## Decisiones relevantes
 
 | Decisión | Justificación | Consecuencia |
 |---|---|---|
-| Palabras reservadas antes de `IDENT`. | Flex resuelve empates por orden de regla. | Mayúsculas producen tokens reservados; minúsculas permanecen identificadores. |
-| Candidato numérico después de `HORA`. | Evita fragmentar horarios incorrectos sin rechazar `25:70`. | Forma y rango permanecen en etapas distintas. |
-| Valores textuales para ID, cadena y hora. | Prepara el contrato para el AST futuro. | Flex reserva; Bison libera hoy y transferirá propiedad en Sprint 3. |
-| Lista recursiva con `%empty`. | Traduce `sentencia*` sin ambigüedad ni advertencias. | La cabecera sigue siendo obligatoria y única. |
-| Suprimir `yyerror` tras fallo léxico. | Evita dos diagnósticos de etapas diferentes para un mismo fragmento. | El primer error relevante detiene el procesamiento. |
-| Mantener scripts separados por sprint. | Conserva evidencia de regresión y hace legible el crecimiento. | `make test` ejecuta smoke y frontend en orden. |
+| AST como lista tipada con unión. | Conserva datos, línea y orden sin infraestructura genérica. | Inserción O(1) mediante primer/último nodo. |
+| Transferencia de textos desde Bison. | Evita copias innecesarias y prepara el backend. | El nodo libera los textos; `%destructor` solo actúa si se descartan antes. |
+| `%locations` para nodos. | Evita que el lookahead cambie la línea atribuida. | Los errores semánticos señalan la palabra reservada de la instrucción. |
+| Validar y aplicar en funciones separadas. | Una operación rechazada no debe mutar estado. | El estado temporal solo recibe instrucciones ya validadas. |
+| Agenda copia identificadores. | Su vida útil es independiente del AST durante la validación. | Agenda y AST pueden liberarse sin propiedad compartida. |
+| Una función de intersección semiabierta. | Evita duplicación y permite turnos consecutivos. | Reserva y `LIBRE` consultan la misma regla. |
+| `LISTAR` y `LIBRE` sin salida visible. | El backend corresponde al Sprint 4. | Sprint 3 solo informa validez global o errores. |
 
 ## Registro breve de avances
 
 | Fecha | Avance | Evidencia / resultado |
 |---|---|---|
-| 2026-10-09 | Revisión de la propuesta inicial y cierre de decisiones de diseño. | Roadmap, guía de estudio y seguimiento Scrum creados. |
-| 2026-10-29 | Verificación e implementación de Sprint 1. | Cadena Flex/Bison/GCC/Make y cinco pruebas smoke. |
-| 2026-10-29 | Implementación del scanner y parser completos. | Siete palabras reservadas, tres tokens con valor y cuatro clases de sentencia. |
-| 2026-10-29 | Verificación de Sprint 2. | 26 pruebas acumuladas, diagnóstico por etapa/línea y compilación limpia. |
+| 2026-10-09 | Definición académica inicial. | Roadmap, guía y seguimiento creados. |
+| 2026-10-29 | Sprints 1 y 2 completados. | Construcción reproducible y frontend completo. |
+| 2026-10-29 | AST y ubicaciones integrados. | Programa y lista tipada construidos por acciones Bison. |
+| 2026-10-29 | Semántica y agenda temporal implementadas. | Horas, intervalos, IDs, cancelaciones y cruces validados en orden. |
+| 2026-10-29 | Sprint 3 verificado. | 49 pruebas acumuladas y regresiones de memoria/ubicación aprobadas. |
 
-## Retrospectiva — Sprint 2
+## Retrospectiva — Sprint 3
 
-- **Qué funcionó:** mantener casos separados por etapa permitió comprobar que un
-  error léxico no se informara además como sintáctico.
-- **Qué dificultades aparecieron:** la coincidencia más larga de Flex y la línea
-  de EOF exigieron reglas y estado explícitos.
-- **Qué debe mejorarse:** en Sprint 3, documentar la propiedad de cada puntero en
-  el AST antes de modificar las acciones que hoy liberan valores.
-- **Qué continúa en el próximo sprint:** TL-013 a TL-018, sin comenzar todavía
-  la ejecución de instrucciones del Sprint 4.
+- **Qué funcionó:** separar AST, agenda y semántica permitió probar reglas sin
+  introducir salidas propias del intérprete.
+- **Qué dificultades aparecieron:** la transferencia del start symbol mostró que
+  los destructores de Bison requieren un contrato de propiedad explícito.
+- **Qué debe mejorarse:** Sprint 4 debe reutilizar el estado y validadores
+  actuales; antes de cambiar salidas se debe fijar un contrato determinista.
+- **Qué continúa en el próximo sprint:** TL-019 a TL-023, sin iniciar pruebas
+  integrales de Sprint 5 ni el informe final.
 
 ## Plantilla de retrospectiva
 

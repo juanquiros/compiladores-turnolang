@@ -55,7 +55,8 @@ run_valid() {
     stdout_file="$TEMP_DIR/case_${CASE_NUMBER}.out"
     stderr_file="$TEMP_DIR/case_${CASE_NUMBER}.err"
 
-    if "$EXECUTABLE" "$source_file" >"$stdout_file" 2>"$stderr_file"; then
+    if "$EXECUTABLE" --solo-sintaxis "$source_file" \
+        >"$stdout_file" 2>"$stderr_file"; then
         status=0
     else
         status=$?
@@ -86,7 +87,8 @@ run_error() {
     stdout_file="$TEMP_DIR/case_${CASE_NUMBER}.out"
     stderr_file="$TEMP_DIR/case_${CASE_NUMBER}.err"
 
-    if "$EXECUTABLE" "$source_file" >"$stdout_file" 2>"$stderr_file"; then
+    if "$EXECUTABLE" --solo-sintaxis "$source_file" \
+        >"$stdout_file" 2>"$stderr_file"; then
         status=0
     else
         status=$?
@@ -142,6 +144,8 @@ run_error 'Reserva incompleta' 'sintáctico' 3 "$CASES_DIR/error_reserva_incompl
 run_error 'Cabecera duplicada' 'sintáctico' 3 "$CASES_DIR/error_cabecera_duplicada.tl"
 run_error 'Orden incorrecto' 'sintáctico' 3 "$CASES_DIR/error_orden.tl"
 run_error 'Palabra reservada en minúsculas' 'sintáctico' 3 "$CASES_DIR/error_palabra_minuscula.tl"
+run_error 'Error sintáctico después de construir una sentencia' 'sintáctico' 5 "$CASES_DIR/error_sintactico_despues_sentencia.tl"
+run_error 'Error léxico después de construir una sentencia' 'léxico' 5 "$CASES_DIR/error_lexico_despues_sentencia.tl"
 
 if (( FAILURES > 0 )); then
     printf '\nRESULTADO: %d prueba(s) del frontend fallaron.\n' "$FAILURES" >&2

@@ -8,7 +8,6 @@
 #include "parser.h"
 
 int lexer_had_error = 0;
-int lexer_token_line = 1;
 
 static char *copiar_fragmento(const char *origen, size_t inicio, size_t longitud)
 {
@@ -32,14 +31,20 @@ static int informar_error_lexico(const char *motivo)
             motivo,
             yytext);
     lexer_had_error = 1;
-    lexer_token_line = yylineno;
+    yylloc.first_line = yylineno;
+    yylloc.last_line = yylineno;
+    yylloc.first_column = 0;
+    yylloc.last_column = 0;
     return TOK_ERROR_LEXICO;
 }
 
-#define DEVOLVER_TOKEN(token) \
-    do {                       \
-        lexer_token_line = yylineno; \
-        return (token);        \
+#define DEVOLVER_TOKEN(token)          \
+    do {                               \
+        yylloc.first_line = yylineno;  \
+        yylloc.last_line = yylineno;   \
+        yylloc.first_column = 0;       \
+        yylloc.last_column = 0;        \
+        return (token);                \
     } while (0)
 %}
 

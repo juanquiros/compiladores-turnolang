@@ -1,0 +1,3 @@
+AGENDA "Consultorio";
+
+LIBRE DESDE 12:00 HASTA 11:00;
