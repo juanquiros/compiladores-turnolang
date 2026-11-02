@@ -5,7 +5,7 @@ un único recurso durante un único día. El proyecto corresponde al Trabajo
 Práctico Integrador de Compiladores y muestra el procesamiento completo de un
 lenguaje: scanner, parser, AST, semántica e interpretación.
 
-La versión actual corresponde a la ejecución parcial del Sprint 6. El
+La versión actual corresponde a la corrección editorial posterior al Sprint 6. El
 intérprete está funcionalmente completo y cuenta con un runner integral, 68
 comprobaciones automatizadas, oráculos versionados, un informe LNCS compilado y
 materiales de defensa. El estado existe solo durante la ejecución: no hay base
@@ -331,12 +331,12 @@ documentación.
 
 ## Estado
 
-Los Sprints 0 a 5 están completados. En el Sprint 6, TL-030 está completada y
-TL-028/TL-029 permanecen en progreso: faltan datos confirmados de autores,
-institución, correos y ORCID, y un ensayo humano cronometrado en el entorno de
-presentación. El PDF conserva marcadores explícitos y no se declara definitivo.
-No se implementaron bases de datos, persistencia, interfaz, múltiples recursos
-ni fechas.
+Los Sprints 0 a 5 están completados. En el Sprint 6, TL-028 y TL-030 están
+completadas; TL-029 permanece en progreso hasta ejecutar un ensayo humano
+cronometrado en el entorno de presentación. El informe LNCS definitivo identifica
+a Emanuel Andruszyszyn y Juan Quiros, la Universidad Gastón Dachary y el docente
+Héctor Ruidias. No se implementaron bases de datos, persistencia, interfaz,
+múltiples recursos ni fechas.
 
 La especificación técnica está en
 [`docs/PROPUESTA_ROADMAP.md`](docs/PROPUESTA_ROADMAP.md), la guía conceptual en

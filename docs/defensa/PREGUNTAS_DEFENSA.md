@@ -136,6 +136,6 @@ persistencia, manteniendo explícitas las nuevas reglas semánticas.
 
 ### ¿El informe ya es definitivo?
 
-No. Está compilado y revisado técnicamente, pero conserva marcadores explícitos
-porque los nombres, institución, correos y ORCID no fueron proporcionados. La
-defensa también requiere un ensayo humano cronometrado.
+Sí. El informe identifica a Emanuel Andruszyszyn y Juan Quiros, registra la
+afiliación académica y el docente, y fue recompilado y revisado después de la
+corrección editorial. El ensayo humano de la defensa se registra por separado.

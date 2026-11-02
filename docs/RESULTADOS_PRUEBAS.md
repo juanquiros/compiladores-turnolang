@@ -182,7 +182,7 @@ prueba como aprobada.
 | Runner integral | Implementado | Verificado con 68 casos y falla inducida | `test_all.sh`, `test_calidad.sh` |
 | Revisión de memoria | Implementado según herramientas disponibles | Parcial: estática y manual; dinámica pendiente por entorno | esta sección |
 | README de instalación y uso | Implementado | Verificado contra comandos del Sprint 5 | README |
-| Informe LNCS y referencias | En progreso | PDF de 8 páginas compilado y revisado; autoría pendiente | `informe/`, TL-028 |
+| Informe LNCS y referencias | Implementado | PDF definitivo compilado y revisado con identificación académica completa | `informe/`, TL-028 |
 | Demostración y defensa | En progreso | Casos ejecutados y guion de 14:30; ensayo humano pendiente | `docs/defensa/`, TL-029 |
 | Revisión final de trazabilidad | Implementado | Verificado y consolidado | `TRAZABILIDAD_FINAL.md`, TL-030 |
 
@@ -191,8 +191,8 @@ prueba como aprobada.
 - Falta una ejecución dinámica de memoria en un Linux con Valgrind o ASan.
 - El entorno principal requiere Git Bash; ejecutar recetas directamente desde
   PowerShell falla si no dispone de utilidades POSIX.
-- El informe LNCS conserva marcadores de autoría y el ensayo humano de defensa
-  aún no fue cronometrado; estas condiciones impiden cerrar el Sprint 6.
+- El ensayo humano de defensa aún no fue cronometrado; esa condición impide
+  cerrar el Sprint 6.
 
 No existen dependencias de base de datos, red, GUI ni bibliotecas externas.
 
@@ -206,6 +206,6 @@ El manuscrito usa `llncs.cls` y `splncs04.bst` del paquete oficial de Springer.
 La compilación integrada y una compilación independiente con Tectonic 0.17.0
 finalizaron correctamente, con bibliografía resuelta. El PDF final tiene 8
 páginas, versión PDF 1.5 y hash SHA-256
-`319a170cc9adf55db088540739d993a29a25f222e741703185799f6c6b702740`.
+`09b5bd4ec0ac932b0203a375c5d92e1bcceaa132ddc133f13e8f2254c2d0d556`.
 Todas las páginas y las dos figuras vectoriales fueron renderizadas y revisadas
 visualmente; no se observaron recortes, superposiciones ni texto ilegible.

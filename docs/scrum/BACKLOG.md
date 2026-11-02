@@ -34,7 +34,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 | [TL-025](#tl-025) | Implementar runner y `make test` | Crítica | 5 | Completado |
 | [TL-026](#tl-026) | Verificar memoria y compilación limpia | Alta | 5 | Completado |
 | [TL-027](#tl-027) | Documentar instalación y uso | Alta | 5 | Completado |
-| [TL-028](#tl-028) | Elaborar informe LNCS | Crítica | 6 | En progreso |
+| [TL-028](#tl-028) | Elaborar informe LNCS | Crítica | 6 | Completado |
 | [TL-029](#tl-029) | Preparar demostración y defensa | Crítica | 6 | En progreso |
 | [TL-030](#tl-030) | Ejecutar revisión final de trazabilidad | Crítica | 6 | Completado |
 
@@ -393,9 +393,9 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Criterios de aceptación:** compila en formato LNCS; cada referencia se cita,
   figuras/tablas/código tienen epígrafe y referencia previa, y los resultados
   coinciden con ejecuciones reales.
-- **Estado:** En progreso. El manuscrito, la bibliografía, las figuras y el PDF
-  LNCS de ocho páginas fueron compilados y revisados. Falta confirmar autores,
-  institución, correos y ORCID; por ello el informe no es definitivo.
+- **Estado:** Completado. El manuscrito identifica a Emanuel Andruszyszyn y Juan
+  Quiros, registra la afiliación académica y el docente, y fue corregido,
+  compilado y revisado visualmente con bibliografía resuelta.
 
 <a id="tl-029"></a>
 ### TL-029 — Preparar demostración y defensa

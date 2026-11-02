@@ -23,7 +23,7 @@ puede cerrarse sin datos o ejecución de los integrantes.
 | Construcción reproducible | `Makefile`, `.gitattributes` | Limpia, incremental, paralela y 68/68 | Construcción reproducible | `make test` | Cubierto en Windows/Git Bash |
 | Informe LNCS auténtico | `informe/main.tex`, clase y estilo oficiales | Compilación y revisión visual del PDF | Documento completo | Referencia al informe | Cubierto técnicamente |
 | Bibliografía verificable | `informe/referencias.bib` | Todas las citas resueltas y fuentes oficiales/editoriales | Referencias | Preguntas de defensa | Cubierto |
-| Autoría y afiliación definitivas | Encabezado de `main.tex` | Marcadores explícitos, sin datos inventados | Portada | No aplica | Pendiente humano |
+| Autoría y afiliación definitivas | Encabezado de `main.tex` | Autores, universidad, carrera, asignatura y docente confirmados | Portada | No aplica | Cubierto |
 | Defensa menor o igual a 15 min | `docs/defensa/GUION_15_MIN.md` | Plan de 14:30; tabla de ensayo vacía | Limitaciones | Demo completa | Pendiente humano |
 | Alcance sin funcionalidades ficticias | README, backlog, seguimiento, informe | Revisión cruzada de documentos y código | Limitaciones | Cierre | Cubierto |
 
@@ -34,5 +34,5 @@ puede cerrarse sin datos o ejecución de los integrantes.
 - El alcance sigue limitado a una agenda, un recurso, un día y memoria volátil.
 - La ausencia de Valgrind/ASan ejecutable se mantiene como limitación, no como
   prueba aprobada.
-- El Sprint 6 queda parcialmente completado: la trazabilidad técnica está
-  cerrada; autoría y ensayo humano continúan pendientes.
+- El Sprint 6 mantiene una única condición pendiente: ejecutar y registrar el
+  ensayo humano cronometrado de la defensa.

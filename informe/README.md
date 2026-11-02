@@ -9,11 +9,11 @@ consultada el 2 de noviembre de 2026.
 
 ## Estado editorial
 
-El contenido técnico, la bibliografía, las figuras y la compilación están
-preparados y verificados. El manuscrito **no es definitivo** porque faltan los
-nombres de autores, institución, correos y, si corresponde, ORCID. Los campos
-se mantienen como marcadores explícitos en `main.tex`; no deben sustituirse por
-datos inventados.
+El informe académico definitivo identifica a Emanuel Andruszyszyn y Juan Quiros
+como autores, con afiliación a la Universidad Gastón Dachary. El contenido
+técnico, la bibliografía, las figuras y la compilación están verificados. La
+corrección editorial eliminó del artículo los marcadores y las indicaciones
+internas del proceso de preparación.
 
 ## Estructura
 
@@ -41,14 +41,9 @@ La salida de `main.pdf` puede renombrarse como `TurnoLang_LNCS.pdf` solo despué
 de comprobar que no hay referencias sin resolver y de revisar visualmente todas
 las páginas.
 
-La versión incluida se compiló el 2 de noviembre de 2026 con el compilador
-integrado y se reprodujo con Tectonic 0.17.0. Las ocho páginas y ambas figuras
-se renderizaron para revisión visual. SHA-256 del PDF:
-`319a170cc9adf55db088540739d993a29a25f222e741703185799f6c6b702740`.
+La versión incluida fue corregida, recompilada y revisada visualmente el 2 de
+noviembre de 2026 con el compilador integrado y Tectonic 0.17.0. La cantidad de
+páginas y el hash SHA-256 registrados abajo corresponden al PDF publicado:
 
-## Antes de entregar
-
-1. Reemplazar todos los marcadores de autoría con información confirmada.
-2. Identificar un único autor de correspondencia y validar su correo.
-3. Recompilar y revisar el PDF completo.
-4. Confirmar con la cátedra los requisitos finales de extensión y entrega.
+- Páginas: 8.
+- SHA-256: `09b5bd4ec0ac932b0203a375c5d92e1bcceaa132ddc133f13e8f2254c2d0d556`.

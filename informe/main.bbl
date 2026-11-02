@@ -23,12 +23,6 @@ Mernik, M., Heering, J., Sloane, A.M.: When and how to develop domain-specific
   languages. ACM Computing Surveys  \textbf{37}(4),  316--344 (2005).
   \doi{10.1145/1118890.1118892}
 
-\bibitem{springer2026lncs}
-{Springer Nature}: Instructions for Authors of Papers to Be Published in
-  Springer Computer Science Proceedings,
-  \url{https://link.springer.com/series/558/information-for-authors-and-editors},
-  consultado el 2 de noviembre de 2026
-
 \bibitem{flex2016}
 {The Flex Project}: Lexical Analysis with Flex, Version 2.6.2 (2016),
   \url{https://westes.github.io/flex/manual/}, consultado el 2 de noviembre de

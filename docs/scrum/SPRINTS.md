@@ -111,9 +111,9 @@ y el estado de cada tarea se mantienen únicamente en
   apunta a evidencia concreta.
 - **Evidencia requerida:** PDF LNCS compilado, salida de la demo seleccionada,
   registro del ensayo cronometrado y lista final de trazabilidad revisada.
-- **Estado al 2 de noviembre de 2026:** en progreso. El PDF, las salidas de demo
-  y la matriz están verificados; faltan los metadatos de autoría y el registro
-  de un ensayo humano cronometrado.
+- **Estado al 2 de noviembre de 2026:** en progreso. El PDF definitivo, las
+  salidas de demo y la matriz están verificados; falta el registro de un ensayo
+  humano cronometrado.
 
 ## Regla de transición
 

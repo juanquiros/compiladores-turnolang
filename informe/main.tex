@@ -8,6 +8,7 @@
 \usepackage{array}
 \usepackage{xurl}
 \usepackage{listings}
+\usepackage{float}
 
 \addto\captionsspanish{%
   \renewcommand{\tablename}{Tabla}%
@@ -27,10 +28,12 @@
 
 \title{TurnoLang: Diseño e Implementación de un Lenguaje Específico de Dominio para la Gestión de Turnos}
 \titlerunning{TurnoLang: un DSL para la gestión de turnos}
-\author{[NOMBRES DE AUTORES POR CONFIRMAR]}
-\authorrunning{Autores por confirmar}
-\institute{[INSTITUCIÓN POR CONFIRMAR]\\
-\texttt{[CORREOS Y ORCID POR CONFIRMAR]}}
+\author{Emanuel Andruszyszyn \and Juan Quiros}
+\authorrunning{E. Andruszyszyn y J. Quiros}
+\institute{Universidad Gastón Dachary, Posadas, Misiones, Argentina\\
+Ingeniería en Informática -- Compiladores\\
+Trabajo Práctico Integrador\\
+Docente: Héctor Ruidias}
 \maketitle
 
 \begin{abstract}
@@ -112,7 +115,7 @@ La Tabla~\ref{tab:instrucciones} resume las construcciones del lenguaje. Todas
 las palabras reservadas distinguen mayúsculas y minúsculas, y cada sentencia
 termina con punto y coma.
 
-\begin{table}
+\begin{table}[H]
 \caption{Instrucciones y efectos de TurnoLang.}
 \label{tab:instrucciones}
 \centering
@@ -134,6 +137,7 @@ La gramática implementada se presenta en el Listado~\ref{lst:gramatica}. El
 scanner reconoce por separado cadenas, identificadores y horarios. Los valores
 asociados a esos tokens se transfieren al parser para construir el AST.
 
+\noindent\begin{minipage}{\linewidth}
 \begin{lstlisting}[caption={Gramática abstracta de TurnoLang.},label={lst:gramatica}]
 programa       ::= cabecera sentencia* EOF
 cabecera       ::= AGENDA CADENA ";"
@@ -143,6 +147,7 @@ cancelacion    ::= CANCELAR IDENT ";"
 disponibilidad ::= LIBRE DESDE HORA HASTA HORA ";"
 listado        ::= LISTAR ";"
 \end{lstlisting}
+\end{minipage}
 
 El Listado~\ref{lst:programa} ilustra un programa que reserva, consulta,
 cancela, vuelve a consultar y finalmente lista. La salida funcional se produce
@@ -283,7 +288,7 @@ Flex 2.6.4 (\texttt{winflexbison} 2.5.25), Bison 3.8.2, GCC 15.2.0, GNU Make
 4.4.1 y Bash 5.3.15. La Tabla~\ref{tab:resultados} presenta el resultado real de
 \texttt{make test} después de una construcción limpia.
 
-\begin{table}
+\begin{table}[H]
 \caption{Resultado de la batería integral.}
 \label{tab:resultados}
 \centering
@@ -344,9 +349,9 @@ siendo una limitación y no se sustituye por la revisión estática.
 
 Las 68 comprobaciones son deterministas y cubren las reglas documentadas, pero
 no constituyen una demostración formal ni una medición exhaustiva de todas las
-entradas posibles. Además, la defensa oral todavía requiere un ensayo humano
-cronometrado y los metadatos de autoría deben completarse antes de considerar
-este manuscrito definitivo.
+entradas posibles. Los resultados caracterizan el comportamiento observado en
+el entorno y el corpus descritos, por lo que no deben generalizarse a
+plataformas ni entradas no verificadas.
 
 \section{Conclusiones}
 
@@ -356,17 +361,17 @@ la validez léxica, sintáctica y semántica, mientras que el AST desacopla el
 frontend del backend. El recorrido compartido \emph{validar, aplicar y
 observar} evita duplicación entre el modo semántico y el intérprete.
 
-La construcción limpia y las 68 comprobaciones aprobadas aportan evidencia
-reproducible del comportamiento implementado. El principal trabajo pendiente
-antes de la entrega definitiva es administrativo y de validación final:
-completar autores, afiliación, correos y, si corresponde, ORCID; realizar el
-ensayo humano dentro de los 15 minutos; y, cuando exista un entorno Linux
-adecuado, complementar la revisión de memoria con Valgrind o sanitizers.
+Flex aportó la generación sistemática del scanner y Bison la verificación de la
+gramática junto con las acciones que construyen el AST. Esta representación
+permitió separar el frontend de las reglas semánticas y del intérprete, mientras
+que el Makefile automatizó generación, compilación, enlace y pruebas. La
+construcción limpia y las 68 comprobaciones aprobadas aportan evidencia
+reproducible del comportamiento implementado.
 
-El documento utiliza la clase y el estilo bibliográfico oficiales de LNCS. La
-preparación siguió las instrucciones de Springer para autores, en particular la
-referencia cruzada de figuras y tablas, el uso de gráficos vectoriales y la
-correspondencia entre citas y bibliografía \cite{springer2026lncs}.
+El alcance continúa limitado a una agenda, un recurso, un día y estado volátil.
+La ausencia de una ejecución dinámica de memoria con Valgrind o sanitizers en
+Linux permanece como principal limitación técnica y como línea de verificación
+futura, sin afectar los resultados funcionales obtenidos en el entorno probado.
 
 \bibliographystyle{splncs04}
 \bibliography{referencias}
