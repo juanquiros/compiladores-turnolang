@@ -75,10 +75,7 @@ $(TARGET): $(OBJECTS) | $(BIN_DIR)
 	$(CC) $(LDFLAGS) $(OBJECTS) $(LDLIBS) -o $@
 
 test: $(TARGET)
-	bash scripts/test_smoke.sh
-	bash scripts/test_frontend.sh
-	bash scripts/test_semantica.sh
-	bash scripts/test_interprete.sh
+	bash scripts/test_all.sh
 
 clean:
 	rm -rf -- $(BUILD_DIR) $(BIN_DIR)

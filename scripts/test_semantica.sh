@@ -5,6 +5,9 @@ set -u
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 EXECUTABLE="$ROOT_DIR/bin/turnolang"
 CASES_DIR="$ROOT_DIR/examples/semantica"
+EXPECTED_DIR="$ROOT_DIR/examples/esperados"
+SUCCESS_STATUS="$(<"$EXPECTED_DIR/codigo_exito.txt")"
+ERROR_STATUS="$(<"$EXPECTED_DIR/codigo_error.txt")"
 FAILURES=0
 CASE_NUMBER=0
 TEMP_DIR=""
@@ -44,6 +47,14 @@ show_evidence() {
     fi
 }
 
+normalize_line_endings() {
+    local file="$1"
+    local normalized="${file}.normalized"
+
+    sed 's/\r$//' "$file" >"$normalized"
+    mv -- "$normalized" "$file"
+}
+
 run_valid() {
     local label="$1"
     local source_file="$2"
@@ -62,10 +73,11 @@ run_valid() {
         status=$?
     fi
 
-    if (( status == 0 )) &&
-       grep -Fq 'Análisis léxico y sintáctico: correcto.' "$stdout_file" &&
-       grep -Fq 'Análisis semántico: correcto.' "$stdout_file" &&
-       ! grep -Eq 'DISPONIBLE|OCUPADO|Agenda:' "$stdout_file" &&
+    normalize_line_endings "$stdout_file"
+    normalize_line_endings "$stderr_file"
+
+    if (( status == SUCCESS_STATUS )) &&
+       cmp -s "$EXPECTED_DIR/solo_semantica_ok.out" "$stdout_file" &&
        [[ ! -s "$stderr_file" ]]; then
         pass "$label"
     else
@@ -94,12 +106,18 @@ run_error() {
         status=$?
     fi
 
-    if (( status != 0 )) &&
+    normalize_line_endings "$stdout_file"
+    normalize_line_endings "$stderr_file"
+
+    if (( status == ERROR_STATUS )) &&
        grep -Fq "Error semántico en línea ${line}:" "$stderr_file" &&
        grep -Fq "$reason" "$stderr_file" &&
        ! grep -Fq 'Error léxico en línea' "$stderr_file" &&
        ! grep -Fq 'Error sintáctico en línea' "$stderr_file" &&
-       ! grep -Fq 'Análisis semántico: correcto.' "$stdout_file"; then
+       cmp -s "$EXPECTED_DIR/solo_semantica_error.out" "$stdout_file" &&
+       [[ $(wc -l <"$stderr_file") -eq 3 ]] &&
+       [[ $(tail -n 1 "$stderr_file") == 'Análisis semántico: fallido.' ]] &&
+       ! grep -Eq 'DISPONIBLE|OCUPADO|Agenda:' "$stderr_file"; then
         pass "$label"
     else
         fail "$label (clasificación, línea, motivo o código incorrectos)"

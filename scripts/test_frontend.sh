@@ -5,6 +5,9 @@ set -u
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 EXECUTABLE="$ROOT_DIR/bin/turnolang"
 CASES_DIR="$ROOT_DIR/examples/frontend"
+EXPECTED_DIR="$ROOT_DIR/examples/esperados"
+SUCCESS_STATUS="$(<"$EXPECTED_DIR/codigo_exito.txt")"
+ERROR_STATUS="$(<"$EXPECTED_DIR/codigo_error.txt")"
 FAILURES=0
 CASE_NUMBER=0
 TEMP_DIR=""
@@ -44,6 +47,14 @@ show_evidence() {
     fi
 }
 
+normalize_line_endings() {
+    local file="$1"
+    local normalized="${file}.normalized"
+
+    sed 's/\r$//' "$file" >"$normalized"
+    mv -- "$normalized" "$file"
+}
+
 run_valid() {
     local label="$1"
     local source_file="$2"
@@ -62,8 +73,11 @@ run_valid() {
         status=$?
     fi
 
-    if (( status == 0 )) &&
-       grep -Fq 'Análisis léxico y sintáctico: correcto.' "$stdout_file" &&
+    normalize_line_endings "$stdout_file"
+    normalize_line_endings "$stderr_file"
+
+    if (( status == SUCCESS_STATUS )) &&
+       cmp -s "$EXPECTED_DIR/solo_sintaxis_ok.out" "$stdout_file" &&
        [[ ! -s "$stderr_file" ]]; then
         pass "$label"
     else
@@ -94,6 +108,9 @@ run_error() {
         status=$?
     fi
 
+    normalize_line_endings "$stdout_file"
+    normalize_line_endings "$stderr_file"
+
     expected="Error ${stage} en línea ${line}:"
     if [[ "$stage" == "léxico" ]]; then
         unexpected='Error sintáctico en línea'
@@ -101,10 +118,14 @@ run_error() {
         unexpected='Error léxico en línea'
     fi
 
-    if (( status != 0 )) &&
+    if (( status == ERROR_STATUS )) &&
        grep -Fq "$expected" "$stderr_file" &&
        ! grep -Fq "$unexpected" "$stderr_file" &&
-       ! grep -Fq 'Análisis léxico y sintáctico: correcto.' "$stdout_file"; then
+       [[ ! -s "$stdout_file" ]] &&
+       [[ $(wc -l <"$stderr_file") -eq 3 ]] &&
+       [[ $(tail -n 1 "$stderr_file") == \
+          'Análisis léxico y sintáctico: fallido.' ]] &&
+       ! grep -Eq 'DISPONIBLE|OCUPADO|Agenda:' "$stderr_file"; then
         pass "$label"
     else
         fail "$label (clasificación, línea o código incorrectos)"

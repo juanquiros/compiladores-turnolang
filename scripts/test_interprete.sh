@@ -6,6 +6,9 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 EXECUTABLE="$ROOT_DIR/bin/turnolang"
 CASES_DIR="$ROOT_DIR/examples/interprete"
 EXPECTED_DIR="$CASES_DIR/esperados"
+EXPECTED_ROOT="$ROOT_DIR/examples/esperados"
+SUCCESS_STATUS="$(<"$EXPECTED_ROOT/codigo_exito.txt")"
+ERROR_STATUS="$(<"$EXPECTED_ROOT/codigo_error.txt")"
 FAILURES=0
 CASE_NUMBER=0
 TEMP_DIR=""
@@ -125,7 +128,7 @@ verify_repeatability() {
     if (( first_status == 0 && second_status == 0 )) &&
        cmp -s "$first_out" "$second_out" &&
        cmp -s "$first_err" "$second_err"; then
-        pass 'Programa completo repetible'
+        printf '[VERIFICADO] Programa completo repetible\n'
     else
         fail 'Programa completo: dos ejecuciones no fueron idénticas'
     fi
@@ -140,37 +143,37 @@ TEMP_DIR="$(mktemp -d)"
 
 printf '\nSprint 4:\n'
 
-run_case 'Reserva y listado' 'ok_reserva_listado.tl' 0 \
+run_case 'Reserva y listado' 'ok_reserva_listado.tl' "$SUCCESS_STATUS" \
     "$EXPECTED_DIR/ok_reserva_listado.out" -
-run_case 'Listado ordenado' 'ok_listado_ordenado.tl' 0 \
+run_case 'Listado ordenado' 'ok_listado_ordenado.tl' "$SUCCESS_STATUS" \
     "$EXPECTED_DIR/ok_listado_ordenado.out" -
-run_case 'Cancelación' 'ok_cancelacion.tl' 0 \
+run_case 'Cancelación' 'ok_cancelacion.tl' "$SUCCESS_STATUS" \
     "$EXPECTED_DIR/ok_cancelacion.out" -
-run_case 'Reutilización de identificador' 'ok_reutilizacion_id.tl' 0 \
+run_case 'Reutilización de identificador' 'ok_reutilizacion_id.tl' "$SUCCESS_STATUS" \
     "$EXPECTED_DIR/ok_reutilizacion_id.out" -
-run_case 'Disponibilidad libre' 'ok_disponible.tl' 0 \
+run_case 'Disponibilidad libre' 'ok_disponible.tl' "$SUCCESS_STATUS" \
     "$EXPECTED_DIR/ok_disponible.out" -
-run_case 'Disponibilidad ocupada' 'ok_ocupado.tl' 0 \
+run_case 'Disponibilidad ocupada' 'ok_ocupado.tl' "$SUCCESS_STATUS" \
     "$EXPECTED_DIR/ok_ocupado.out" -
-run_case 'Reservas consecutivas' 'ok_consecutivas.tl' 0 \
+run_case 'Reservas consecutivas' 'ok_consecutivas.tl' "$SUCCESS_STATUS" \
     "$EXPECTED_DIR/ok_consecutivas.out" -
-run_case 'Agenda vacía' 'ok_agenda_vacia.tl' 0 \
+run_case 'Agenda vacía' 'ok_agenda_vacia.tl' "$SUCCESS_STATUS" \
     "$EXPECTED_DIR/ok_agenda_vacia.out" -
-run_case 'Múltiples listados' 'ok_multiples_listados.tl' 0 \
+run_case 'Múltiples listados' 'ok_multiples_listados.tl' "$SUCCESS_STATUS" \
     "$EXPECTED_DIR/ok_multiples_listados.out" -
-run_case 'Error semántico detiene ejecución' 'error_superposicion.tl' 1 \
+run_case 'Error semántico detiene ejecución' 'error_superposicion.tl' "$ERROR_STATUS" \
     - "$EXPECTED_DIR/error_superposicion.err"
-run_case 'Salida anterior conservada ante error' 'error_despues_salida.tl' 1 \
+run_case 'Salida anterior conservada ante error' 'error_despues_salida.tl' "$ERROR_STATUS" \
     "$EXPECTED_DIR/error_despues_salida.out" \
     "$EXPECTED_DIR/error_despues_salida.err"
-run_case 'Programa completo' 'ok_completo.tl' 0 \
+run_case 'Programa completo' 'ok_completo.tl' "$SUCCESS_STATUS" \
     "$EXPECTED_DIR/ok_completo.out" -
-run_case 'Consulta ocupada permite continuar' 'ok_ocupado_continua.tl' 0 \
+run_case 'Consulta ocupada permite continuar' 'ok_ocupado_continua.tl' "$SUCCESS_STATUS" \
     "$EXPECTED_DIR/ok_ocupado_continua.out" -
-run_case 'Error léxico impide interpretación' 'error_lexico_tardio.tl' 1 \
+run_case 'Error léxico impide interpretación' 'error_lexico_tardio.tl' "$ERROR_STATUS" \
     - "$EXPECTED_DIR/error_lexico_tardio.err"
 run_case 'Error sintáctico impide interpretación' \
-    'error_sintactico_tardio.tl' 1 - \
+    'error_sintactico_tardio.tl' "$ERROR_STATUS" - \
     "$EXPECTED_DIR/error_sintactico_tardio.err"
 
 verify_repeatability

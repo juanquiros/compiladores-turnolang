@@ -30,10 +30,10 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 | [TL-021](#tl-021) | Ejecutar disponibilidad | Alta | 4 | Completado |
 | [TL-022](#tl-022) | Ejecutar listado ordenado | Alta | 4 | Completado |
 | [TL-023](#tl-023) | Estabilizar salida y códigos de proceso | Alta | 4 | Completado |
-| [TL-024](#tl-024) | Completar corpus de escenarios | Crítica | 5 | Pendiente |
-| [TL-025](#tl-025) | Implementar runner y `make test` | Crítica | 5 | Pendiente |
-| [TL-026](#tl-026) | Verificar memoria y compilación limpia | Alta | 5 | Pendiente |
-| [TL-027](#tl-027) | Documentar instalación y uso | Alta | 5 | Pendiente |
+| [TL-024](#tl-024) | Completar corpus de escenarios | Crítica | 5 | Completado |
+| [TL-025](#tl-025) | Implementar runner y `make test` | Crítica | 5 | Completado |
+| [TL-026](#tl-026) | Verificar memoria y compilación limpia | Alta | 5 | Completado |
+| [TL-027](#tl-027) | Documentar instalación y uso | Alta | 5 | Completado |
 | [TL-028](#tl-028) | Elaborar informe LNCS | Crítica | 6 | Pendiente |
 | [TL-029](#tl-029) | Preparar demostración y defensa | Crítica | 6 | Pendiente |
 | [TL-030](#tl-030) | Ejecutar revisión final de trazabilidad | Crítica | 6 | Pendiente |
@@ -341,7 +341,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-023.
 - **Criterios de aceptación:** todos los casos de la estrategia de pruebas tienen
   archivo, objetivo, oráculo y clasificación, sin escenarios redundantes.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 <a id="tl-025"></a>
 ### TL-025 — Implementar runner y `make test`
@@ -353,7 +353,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-007, TL-024.
 - **Criterios de aceptación:** `make test` devuelve cero solo si todos los casos
   coinciden y señala de forma útil cualquier diferencia.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 <a id="tl-026"></a>
 ### TL-026 — Verificar memoria y compilación limpia
@@ -365,7 +365,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-025.
 - **Criterios de aceptación:** compilación sin advertencias relevantes, pruebas
   completas y verificación de memoria documentada en un entorno compatible.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 <a id="tl-027"></a>
 ### TL-027 — Documentar instalación y uso reproducible
@@ -377,7 +377,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-005, TL-025, TL-026.
 - **Criterios de aceptación:** otra persona puede reproducir construcción y
   pruebas desde una copia limpia siguiendo solo el README.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 ## Sprint 6: entrega y defensa
 

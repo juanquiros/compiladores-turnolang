@@ -5,9 +5,10 @@ un único recurso durante un único día. El proyecto corresponde al Trabajo
 Práctico Integrador de Compiladores y muestra el procesamiento completo de un
 lenguaje: scanner, parser, AST, semántica e interpretación.
 
-La versión actual corresponde al Sprint 4. Ejecuta reservas y cancelaciones,
-consulta disponibilidad y lista las reservas activas en orden cronológico. El
-estado existe solo durante la ejecución: no hay base de datos ni persistencia.
+La versión actual corresponde al Sprint 5. El intérprete está funcionalmente
+completo y cuenta con un runner integral, 68 comprobaciones automatizadas,
+oráculos versionados y documentación reproducible. El estado existe solo
+durante la ejecución: no hay base de datos ni persistencia.
 
 ## Lenguaje
 
@@ -206,9 +207,13 @@ después de aceptar el archivo completo.
 - En errores semánticos y fallos internos, el motor libera la agenda; `main`
   libera AST, scanner y archivo.
 
-El entorno MinGW verificado no dispone de Valgrind ni AddressSanitizer. Se
-revisó el contrato de propiedad y se ejercitaron rutas normales, errores del
-frontend después de nodos válidos y finalización semántica anticipada.
+El entorno MinGW verificado no dispone de Valgrind ni de las bibliotecas de
+AddressSanitizer/UBSan. Se intentó el enlace instrumentado y falló por ausencia
+de `libasan` y `libubsan`. Como alternativa se compiló con `GCC -fanalyzer`: los
+módulos propios no generaron advertencias; las advertencias se limitaron al
+código generado por Flex/Bison y sus caminos de asignación. La propiedad también
+se revisó manualmente y mediante rutas normales y de error. La ausencia de una
+ejecución dinámica de memoria en Linux permanece documentada como limitación.
 
 ## Entorno verificado
 
@@ -220,6 +225,11 @@ Windows 11 con Git Bash y:
 - GNU Make 4.4.1; y
 - GNU Bash 5.3.15.
 
+También se requiere Git para clonar el repositorio. No se declara compatibilidad
+con otros sistemas porque no fueron verificados durante estos sprints.
+
+### Instalación
+
 Desde PowerShell se pueden instalar las herramientas con:
 
 ```powershell
@@ -228,6 +238,15 @@ scoop install gcc make winflexbison
 
 Los comandos de construcción deben ejecutarse desde Git Bash, porque el
 Makefile usa utilidades POSIX como `rm` y `mkdir`.
+
+### Clonación
+
+Desde Git Bash:
+
+```bash
+git clone https://github.com/juanquiros/compiladores-turnolang.git
+cd compiladores-turnolang
+```
 
 ## Compilación
 
@@ -245,18 +264,51 @@ paralela.
 make test
 ```
 
-Se ejecutan 64 escenarios:
+Se ejecutan 68 comprobaciones:
 
 - 5 pruebas smoke del Sprint 1;
 - 23 pruebas del frontend con `--solo-sintaxis`;
 - 21 pruebas semánticas con `--solo-semantica`; y
-- 15 pruebas funcionales del intérprete.
+- 15 pruebas funcionales del intérprete; y
+- 4 comprobaciones de calidad y reproducibilidad.
 
 Las pruebas del intérprete comparan código, `stdout` y `stderr` completos contra
 oráculos versionados. También comprueban orden, cancelación, reutilización,
 agenda vacía, salidas previas a error, bloqueo del backend ante fallos de
-frontend y repetibilidad. El runner normaliza únicamente `CRLF`/`LF` para que la
-comparación sea reproducible entre el ejecutable de Windows y Git.
+frontend y repetibilidad. Las comprobaciones de calidad agregan archivo vacío,
+archivo sin salto final, ruta con espacios y una falla inducida del comparador.
+El runner normaliza únicamente `CRLF`/`LF` para que la comparación sea
+reproducible entre el ejecutable de Windows y Git.
+
+`.gitattributes` fija `LF` para scripts, fuentes, casos y oráculos. Así una
+clonación Windows no introduce `CRLF` en los resultados esperados ni en los
+archivos que contienen códigos de retorno.
+
+El resumen final tiene esta forma y se calcula a partir de las suites
+ejecutadas:
+
+```text
+TOTAL: 68
+APROBADAS: 68
+FALLIDAS: 0
+```
+
+La cobertura detallada está en
+[`docs/MATRIZ_PRUEBAS.md`](docs/MATRIZ_PRUEBAS.md) y la evidencia técnica en
+[`docs/RESULTADOS_PRUEBAS.md`](docs/RESULTADOS_PRUEBAS.md).
+
+## Errores frecuentes
+
+- **`flex`, `bison`, `gcc` o `make` no se encuentran:** instalar los paquetes
+  con Scoop y abrir una nueva terminal Git Bash.
+- **`rm` o `mkdir` no se encuentran al ejecutar Make:** usar Git Bash, no una
+  sesión PowerShell directa.
+- **No existe `bin/turnolang.exe`:** ejecutar `make` y revisar el primer error de
+  generación o compilación.
+- **No se puede abrir un `.tl`:** comprobar la ruta desde el directorio actual;
+  si contiene espacios, conservarla entre comillas.
+- **`make test` falla:** leer la primera sección `[FALLO]` y el `diff`; no
+  regenerar los oráculos desde la misma ejecución que se intenta validar.
 
 ## Limpieza
 
@@ -269,10 +321,11 @@ documentación.
 
 ## Estado
 
-Los Sprints 0 a 4 y las tareas TL-001 a TL-023 están completados. El Sprint 5
-permanece pendiente: ampliación del corpus, revisión reproducible de memoria y
-documentación final de instalación. No se implementaron bases de datos,
-persistencia, interfaz, múltiples recursos, fechas ni el informe LNCS.
+Los Sprints 0 a 5 y las tareas TL-001 a TL-027 están completados con la
+limitación de memoria dinámica detallada en los resultados. El Sprint 6
+permanece pendiente: informe LNCS, referencias, demostración, defensa y revisión
+final de trazabilidad. No se implementaron bases de datos, persistencia,
+interfaz, múltiples recursos ni fechas.
 
 La especificación técnica está en
 [`docs/PROPUESTA_ROADMAP.md`](docs/PROPUESTA_ROADMAP.md), la guía conceptual en

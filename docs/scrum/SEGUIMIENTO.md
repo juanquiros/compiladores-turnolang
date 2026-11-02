@@ -4,146 +4,192 @@
 
 | Campo | Estado basado en evidencia |
 |---|---|
-| Sprint actual | Sprint 4 — Intérprete completo, finalizado |
-| Estado general | Backend funcional con reserva, cancelación, disponibilidad y listado determinista. |
-| Progreso del backlog | 23 tareas completadas, 7 pendientes, 0 en progreso, 0 bloqueadas. |
-| Próximo objetivo | Sprint 5: TL-024 a TL-027, pruebas ampliadas, memoria y reproducibilidad. |
+| Sprint actual | Sprint 5 — Pruebas y reproducibilidad, finalizado |
+| Estado general | Intérprete estable, runner integral y documentación reproducible. |
+| Progreso del backlog | 27 tareas completadas, 3 pendientes, 0 en progreso, 0 bloqueadas. |
+| Próximo objetivo | Sprint 6: informe LNCS, defensa y revisión final de trazabilidad. |
 
 ## Cierre de sprints
 
 | Sprint | Estado | Evidencia de cierre |
 |---|---|---|
 | Sprint 0 — Definición y preparación | Completado | Diseño, guía, trazabilidad y herramientas verificadas. |
-| Sprint 1 — Compilación | Completado | Construcción reproducible, ejecutable mínimo y 5 pruebas smoke. |
-| Sprint 2 — Análisis léxico y sintáctico | Completado | Frontend completo, diagnósticos y 23 pruebas. |
-| Sprint 3 — Estructuras internas y semántica | Completado | AST, agenda, reglas semánticas y 21 pruebas nuevas. |
-| Sprint 4 — Intérprete completo | Completado | Motor secuencial, salidas estables y 15 escenarios funcionales. |
+| Sprint 1 — Compilación | Completado | Construcción reproducible y 5 pruebas smoke. |
+| Sprint 2 — Análisis léxico y sintáctico | Completado | Frontend, diagnósticos y 23 pruebas. |
+| Sprint 3 — Estructuras internas y semántica | Completado | AST, agenda, reglas y 21 pruebas. |
+| Sprint 4 — Intérprete completo | Completado | Backend y 15 escenarios funcionales. |
+| Sprint 5 — Pruebas y reproducibilidad | Completado | 68 comprobaciones, runner integral, análisis de memoria y documentación. |
 
 ## Actividades completadas
 
-- [x] TL-001 a TL-005 — definición, arquitectura, documentación y entorno.
-- [x] TL-006 a TL-008 — estructura, Makefile y ejecutable mínimo.
-- [x] TL-009 a TL-012 — scanner, parser, diagnósticos y pruebas del frontend.
-- [x] TL-013 a TL-018 — AST, agenda y análisis semántico.
-- [x] [TL-019 — Implementar el recorrido secuencial](BACKLOG.md#tl-019).
-- [x] [TL-020 — Ejecutar reservas y cancelaciones](BACKLOG.md#tl-020).
-- [x] [TL-021 — Ejecutar consultas de disponibilidad](BACKLOG.md#tl-021).
-- [x] [TL-022 — Ejecutar el listado ordenado](BACKLOG.md#tl-022).
-- [x] [TL-023 — Estabilizar salida y códigos de proceso](BACKLOG.md#tl-023).
+- [x] TL-001 a TL-023 — definición, frontend, semántica e intérprete.
+- [x] [TL-024 — Completar el corpus de escenarios](BACKLOG.md#tl-024).
+- [x] [TL-025 — Implementar runner y `make test`](BACKLOG.md#tl-025).
+- [x] [TL-026 — Verificar memoria y compilación limpia](BACKLOG.md#tl-026).
+- [x] [TL-027 — Documentar instalación y uso reproducible](BACKLOG.md#tl-027).
 
-## Actividades pendientes inmediatas
+## Actividades pendientes
 
-- [ ] [TL-024 — Completar el corpus de escenarios](BACKLOG.md#tl-024).
-- [ ] [TL-025 — Consolidar el runner integral](BACKLOG.md#tl-025).
-- [ ] [TL-026 — Verificar memoria y compilación limpia](BACKLOG.md#tl-026).
-- [ ] [TL-027 — Documentar instalación y uso reproducible](BACKLOG.md#tl-027).
+- [ ] [TL-028 — Elaborar el informe LNCS](BACKLOG.md#tl-028).
+- [ ] [TL-029 — Preparar demostración y defensa](BACKLOG.md#tl-029).
+- [ ] [TL-030 — Ejecutar revisión final de trazabilidad](BACKLOG.md#tl-030).
 
-Los 15 casos funcionales añadidos en Sprint 4 acreditan su incremento, pero no
-cierran por sí solos el corpus ampliado, la prueba de memoria ni la
-reproducibilidad integral previstas para Sprint 5. El informe LNCS y la defensa
-permanecen en Sprint 6.
-
-## Actividades bloqueadas
-
-No hay tareas bloqueadas. Sprint 5 no fue iniciado.
+Sprint 6 no fue iniciado. No se redactó el informe, no se crearon referencias o
+figuras y no se preparó una presentación.
 
 ## Entorno verificado
 
-| Componente | Versión detectada | Procedencia |
+| Componente | Versión real | Procedencia |
 |---|---|---|
 | Sistema operativo | Windows 11, NT 10.0.26200.0 | Entorno local. |
 | Shell | GNU Bash 5.3.15 | Git for Windows. |
 | Flex | 2.6.4 | `winflexbison` 2.5.25 mediante Scoop. |
 | Bison | GNU Bison 3.8.2 | `winflexbison` 2.5.25 mediante Scoop. |
-| GCC | 15.2.0 | Scoop. |
+| GCC | 15.2.0 | Scoop / MinGW-w64. |
 | GNU Make | 4.4.1 | Scoop. |
 
-Valgrind y AddressSanitizer no están disponibles en este entorno MinGW. No se
-declara una ejecución dinámica de memoria que no pudo realizarse.
+No se verificó otro sistema operativo. WSL solo contiene la distribución
+interna `docker-desktop`; no existe Ubuntu instalado. El cliente Docker está
+presente, pero su motor no estaba iniciado.
 
-## Evidencia del Sprint 4
+## Evidencia del Sprint 5
 
 | Comando o comprobación | Resultado real |
 |---|---|
-| Línea base `make clean && make && make test` | Aprobada antes de modificar: 49/49 pruebas. |
-| Compilación del backend | `interprete.c` y siete unidades totales enlazadas sin advertencias normales ni conflictos Bison. |
-| `make test` | Aprobado: 5 smoke + 23 frontend + 21 semánticas + 15 intérprete = 64 escenarios. |
-| Construcción incremental | Segunda invocación de `make`: no había trabajo pendiente. |
-| `make clean && make -j2` | Aprobado desde limpio; fuentes y ejemplos preservados por la limpieza. |
-| Modo `--solo-sintaxis` | Aprobado; no valida ni interpreta. |
-| Modo `--solo-semantica` | Aprobado; usa el motor común sin salida funcional. |
-| Modo completo | Aprobado; `stdout` contiene solo resultados del lenguaje. |
-| Reserva/cancelación/reutilización | Aprobado; solo las reservas activas aparecen y ocupan intervalos. |
-| `LIBRE` | Aprobado; informa ambos estados, no muta y `OCUPADO` permite continuar. |
-| `LISTAR` | Aprobado; orden cronológico, canceladas omitidas y agenda vacía definida. |
-| Errores tardíos de frontend | Aprobado; no se emite salida funcional antes de aceptar el archivo completo. |
-| Error semántico intermedio | Aprobado; conserva salida previa, rechaza la operación y omite las posteriores. |
-| Repetibilidad | Dos ejecuciones de `ok_completo.tl` produjeron código y flujos idénticos. |
+| Línea base previa | `make clean && make && make test`: 64/64, sin advertencias normales. |
+| Suite final normal | 68 aprobadas, 0 fallidas. |
+| Construcción incremental | Segunda invocación de `make`: sin trabajo pendiente. |
+| Construcción paralela | `make clean && make -j2 && make test`: 68/68. |
+| Limpieza | Eliminó `build/` y `bin/`; fuentes, scripts y documentación preservados. |
+| Modo intérprete | Salida completa igual al oráculo; código 0. |
+| `--solo-sintaxis` | Salida académica exacta; código 0. |
+| `--solo-semantica` | Salida académica exacta; código 0. |
+| Falla inducida | Una copia temporal del oráculo con una línea extra fue rechazada por `cmp`. |
+| Scripts | Los seis scripts aprobaron `bash -n`. |
 
-La suite completa volvió a aprobar después de la construcción paralela.
+Resumen integral real:
 
-## Arquitectura implementada
+```text
+Sprint 1: 5
+Sprint 2: 23
+Sprint 3: 21
+Sprint 4: 15
+Sprint 5: 4
+TOTAL: 68
+APROBADAS: 68
+FALLIDAS: 0
+```
 
-`semantica_procesar_programa` es el único recorrido de negocio. Conserva las
-funciones internas `validar_sentencia` y `aplicar_sentencia`; después de una
-aplicación válida invoca un observador opcional. `semantica_validar_programa`
-usa el recorrido sin observador y `interprete_ejecutar_programa` lo usa con un
-observador de salida.
+## Cobertura agregada
 
-Así, ambos modos comparten:
+Antes de sumar casos se contrastó el corpus con los bordes requeridos. Ya
+existían límites `00:00`/`23:59`, espacios, cabecera sola, reservas consecutivas,
+listados intercalados, consulta ocupada con continuación y errores tardíos.
 
-- orden del AST;
-- conversión y validación de horas;
-- identificadores y cancelaciones;
-- algoritmo de superposición;
-- actualización de la misma agenda; y
-- detención y liberación ante error.
+Solo se incorporaron cuatro comprobaciones no redundantes:
 
-La agenda sigue ocultando `ReservaAgenda`. Solo entrega un arreglo temporal de
-vistas activas ordenadas para `LISTAR`, que el intérprete libera después de
-imprimir.
+1. archivo completamente vacío;
+2. archivo válido sin salto final;
+3. ruta de entrada con espacios; y
+4. detección de una diferencia inducida en el oráculo.
 
-## Problemas encontrados
+La relación requisito–componente–caso–resultado está en
+[`../MATRIZ_PRUEBAS.md`](../MATRIZ_PRUEBAS.md).
 
-1. Al invocar `make clean` desde PowerShell, GNU Make no encontró `rm`. Se
-   confirmó que el proyecto está definido y documentado para Git Bash; la línea
-   base y la validación final se ejecutan en ese entorno.
-2. El ejecutable nativo de Windows genera `CRLF`, mientras los oráculos de Git
-   usan `LF`. El runner canoniza únicamente el terminador de línea antes de la
-   comparación byte a byte; contenido, orden, código y separación de flujos se
-   siguen comparando estrictamente.
-3. El modo normal anterior imprimía mensajes académicos y habría contaminado el
-   contrato funcional. Esos mensajes quedaron limitados a `--solo-sintaxis` y
-   `--solo-semantica`; el modo completo solo imprime resultados del lenguaje.
+## Consolidación del runner
 
-No quedaron defectos abiertos del Sprint 4.
+`make test` invoca `scripts/test_all.sh`. Este conserva y ejecuta las suites de
+los Sprints 1 a 4 y agrega `test_calidad.sh`. El runner muestra toda la evidencia,
+cuenta las líneas `[OK]`, contrasta cada cantidad con su total declarado y
+devuelve código no cero si una suite falla o queda incompleta.
+
+Frontend y semántica ahora comparan las salidas académicas completas contra
+oráculos versionados. Los errores exigen código `1`, cantidad exacta de líneas,
+etapa única, línea, motivo y ausencia de resultados funcionales. El intérprete
+mantiene comparación completa de ambos flujos y códigos.
+
+## Verificación de memoria
+
+### Herramientas
+
+- **Valgrind:** no instalado.
+- **ASan/UBSan:** el compilador aceptó los flags, pero el enlazador informó
+  `cannot find -lasan` y `cannot find -lubsan`.
+- **GCC `-fanalyzer`:** ejecutado con código de salida cero.
+
+Los módulos propios no produjeron advertencias de `-fanalyzer`. El código
+generado produjo cinco avisos, cuatro clases distintas, en caminos de pila de
+Bison y asignación/fallo de Flex. Se inspeccionaron las rutas generadas: Bison
+libera su pila en el retorno común y Flex llama a `YY_FATAL_ERROR` ante fallos de
+asignación. No se modificó ni silenció código generado.
+
+También se revisaron propiedad de cadenas Flex/Bison, destructores, símbolo
+inicial, AST, copias de agenda, nodos cancelados, vistas temporales, scanner,
+archivo y finalización semántica anticipada. Las pruebas ejercitan esas rutas.
+
+### Limitación
+
+No hubo verificación dinámica con Valgrind o sanitizers. La revisión está
+completada según las herramientas disponibles, pero esa incertidumbre debe
+mencionarse en el informe y, si se dispone de Linux durante Sprint 6, puede
+repetirse allí como evidencia adicional.
+
+La redirección `/dev/full` de Git Bash no transmite de forma confiable un error
+al ejecutable nativo Windows; no se presentó como prueba de fallo de escritura.
+
+El detalle se conserva en
+[`../RESULTADOS_PRUEBAS.md`](../RESULTADOS_PRUEBAS.md).
+
+## Problemas encontrados y correcciones
+
+1. Las suites de frontend y semántica podían aceptar el texto esperado junto
+   con líneas adicionales. Se reemplazaron búsquedas parciales por comparación
+   completa en los caminos válidos y por forma estricta en los diagnósticos.
+2. `make test` no mostraba un resumen global. Se incorporó un runner coordinador
+   sin eliminar los scripts existentes.
+3. Faltaban archivo vacío, ausencia de salto final y ruta con espacios. Se
+   agregaron como casos temporales reproducibles, sin duplicar fixtures.
+4. MinGW no incluye las bibliotecas sanitizer. Se registró el fallo real y se
+   utilizó `-fanalyzer` como evidencia estática alternativa.
+5. `/dev/full` parecía ofrecer una prueba de escritura, pero el comportamiento
+   de traducción de Git Bash no era verificable para el binario nativo. Se
+   descartó el cambio especulativo y se documentó la limitación.
+6. Una clonación con conversión automática podía cambiar a `CRLF` los oráculos
+   y códigos esperados. Se agregó `.gitattributes` para fijar `LF` en los
+   archivos ejecutables y comparables.
+
+No se detectaron defectos funcionales que requirieran cambiar el lenguaje o el
+intérprete.
 
 ## Decisiones relevantes
 
 | Decisión | Justificación | Consecuencia |
 |---|---|---|
-| Observador opcional después de aplicar. | Comparte recorrido y estado entre semántica e intérprete. | No hay doble validación ni segunda agenda. |
-| `LIBRE` conserva el resultado de la intersección. | Ya consulta la función común durante validación. | `OCUPADO` se imprime sin repetir el algoritmo. |
-| Vista temporal ordenada de reservas. | Mantiene privado el nodo de agenda. | `LISTAR` es simple y libera un único arreglo temporal. |
-| Silencio para reserva/cancelación. | Evita mensajes no especificados. | Solo consultas y listados aparecen en `stdout`. |
-| Oráculos completos versionados. | Hace observable cualquier cambio de línea u orden. | Los 15 casos fallan ante salida extra, faltante o código incorrecto. |
+| Mantener las cuatro suites existentes. | Conserva trazabilidad por sprint. | `test_all.sh` solo coordina y resume. |
+| Agregar únicamente bordes faltantes. | Evita inflar métricas con duplicados. | El total aumenta de 64 a 68. |
+| Versionar códigos y salidas académicas comunes. | Reduce falsos positivos. | Todos los modos tienen oráculo explícito. |
+| Generar en temporal los casos especiales. | Garantiza archivo realmente vacío, sin `\n` y ruta con espacios. | No se necesitan fixtures artificiales. |
+| No editar código Flex/Bison generado. | Se regenera desde sus fuentes. | Los avisos estáticos se documentan, no se ocultan. |
+| Fijar `LF` mediante `.gitattributes`. | Los scripts y oráculos se comparan desde Git Bash. | Clonaciones Windows conservan bytes reproducibles. |
 
 ## Registro breve de avances
 
 | Fecha | Avance | Evidencia / resultado |
 |---|---|---|
-| 2026-10-09 | Definición académica inicial. | Roadmap, guía y seguimiento creados. |
+| 2026-10-09 | Definición académica inicial. | Roadmap y guía. |
 | 2026-10-29 | Sprints 1 a 3 completados. | Frontend, AST, semántica y 49 pruebas. |
-| 2026-11-02 | Motor compartido e intérprete implementados. | Tres modos sin duplicar validadores. |
-| 2026-11-02 | Contrato funcional automatizado. | 15 escenarios y repetibilidad aprobados. |
+| 2026-11-02 | Sprint 4 completado. | Intérprete y 64 pruebas acumuladas. |
+| 2026-11-02 | Corpus y runner consolidados. | 68/68 y falla inducida detectada. |
+| 2026-11-02 | Calidad y reproducibilidad verificadas. | Builds normal/incremental/paralelo y evidencia de memoria. |
 
-## Retrospectiva — Sprint 4
+## Retrospectiva — Sprint 5
 
-- **Qué funcionó:** el contrato `validar → aplicar → observar` permitió agregar
-  salidas sin alterar las reglas ya probadas.
-- **Qué dificultades aparecieron:** la diferencia `CRLF`/`LF` y el uso de
-  utilidades POSIX requerían distinguir entorno de ejecución de lógica del DSL.
-- **Qué debe mejorarse:** Sprint 5 debe ejecutar una herramienta dinámica de
-  memoria en un entorno compatible y ampliar los bordes del corpus.
-- **Qué continúa en el próximo sprint:** TL-024 a TL-027; no se inició el
-  informe LNCS ni trabajo del Sprint 6.
+- **Qué funcionó:** revisar primero la matriz evitó agregar pruebas redundantes;
+  reutilizar las suites conservó la trazabilidad.
+- **Qué dificultades aparecieron:** el entorno MinGW carece de runtimes
+  sanitizer y el código generado produce avisos estáticos que requieren
+  distinguir fuente propia de salida de herramientas.
+- **Qué debe mejorarse:** si se dispone de Linux, ejecutar Valgrind o ASan antes
+  de la entrega para reducir la incertidumbre dinámica.
+- **Qué continúa en el próximo sprint:** TL-028 a TL-030: informe LNCS,
+  referencias reales, demo, defensa y revisión final. Sprint 6 no fue iniciado.
