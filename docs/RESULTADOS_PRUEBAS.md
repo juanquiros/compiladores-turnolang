@@ -182,16 +182,30 @@ prueba como aprobada.
 | Runner integral | Implementado | Verificado con 68 casos y falla inducida | `test_all.sh`, `test_calidad.sh` |
 | Revisión de memoria | Implementado según herramientas disponibles | Parcial: estática y manual; dinámica pendiente por entorno | esta sección |
 | README de instalación y uso | Implementado | Verificado contra comandos del Sprint 5 | README |
-| Informe LNCS y referencias | Pendiente | No iniciado | Sprint 6 / TL-028 |
-| Demostración y defensa | Pendiente | No iniciada | Sprint 6 / TL-029 |
-| Revisión final de trazabilidad | Pendiente | No iniciada | Sprint 6 / TL-030 |
+| Informe LNCS y referencias | En progreso | PDF de 8 páginas compilado y revisado; autoría pendiente | `informe/`, TL-028 |
+| Demostración y defensa | En progreso | Casos ejecutados y guion de 14:30; ensayo humano pendiente | `docs/defensa/`, TL-029 |
+| Revisión final de trazabilidad | Implementado | Verificado y consolidado | `TRAZABILIDAD_FINAL.md`, TL-030 |
 
 ## Limitaciones y riesgos para la entrega
 
 - Falta una ejecución dinámica de memoria en un Linux con Valgrind o ASan.
 - El entorno principal requiere Git Bash; ejecutar recetas directamente desde
   PowerShell falla si no dispone de utilidades POSIX.
-- El informe LNCS, referencias bibliográficas, figuras y ensayo de defensa
-  pertenecen al Sprint 6 y permanecen pendientes.
+- El informe LNCS conserva marcadores de autoría y el ensayo humano de defensa
+  aún no fue cronometrado; estas condiciones impiden cerrar el Sprint 6.
 
 No existen dependencias de base de datos, red, GUI ni bibliotecas externas.
+
+## Verificación del Sprint 6
+
+El 2 de noviembre de 2026 se repitió una construcción limpia y `make test`:
+68 comprobaciones aprobadas y 0 fallidas. Los cuatro pasos de la demostración
+produjeron los códigos y salidas documentados.
+
+El manuscrito usa `llncs.cls` y `splncs04.bst` del paquete oficial de Springer.
+La compilación integrada y una compilación independiente con Tectonic 0.17.0
+finalizaron correctamente, con bibliografía resuelta. El PDF final tiene 8
+páginas, versión PDF 1.5 y hash SHA-256
+`319a170cc9adf55db088540739d993a29a25f222e741703185799f6c6b702740`.
+Todas las páginas y las dos figuras vectoriales fueron renderizadas y revisadas
+visualmente; no se observaron recortes, superposiciones ni texto ilegible.

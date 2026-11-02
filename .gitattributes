@@ -12,3 +12,10 @@ Makefile text eol=lf
 *.err text eol=lf
 *.txt text eol=lf
 *.md text eol=lf
+*.tex text eol=lf
+*.bib text eol=lf
+*.bbl text eol=lf
+*.cls text eol=lf
+*.bst text eol=lf
+*.py text eol=lf
+*.pdf binary

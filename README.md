@@ -5,10 +5,11 @@ un único recurso durante un único día. El proyecto corresponde al Trabajo
 Práctico Integrador de Compiladores y muestra el procesamiento completo de un
 lenguaje: scanner, parser, AST, semántica e interpretación.
 
-La versión actual corresponde al Sprint 5. El intérprete está funcionalmente
-completo y cuenta con un runner integral, 68 comprobaciones automatizadas,
-oráculos versionados y documentación reproducible. El estado existe solo
-durante la ejecución: no hay base de datos ni persistencia.
+La versión actual corresponde a la ejecución parcial del Sprint 6. El
+intérprete está funcionalmente completo y cuenta con un runner integral, 68
+comprobaciones automatizadas, oráculos versionados, un informe LNCS compilado y
+materiales de defensa. El estado existe solo durante la ejecución: no hay base
+de datos ni persistencia.
 
 ## Lenguaje
 
@@ -319,13 +320,23 @@ make clean
 Elimina solo `build/` y `bin/`; no borra fuentes, ejemplos, scripts ni
 documentación.
 
+## Entrega académica
+
+- Informe: [`informe/TurnoLang_LNCS.pdf`](informe/TurnoLang_LNCS.pdf) y fuentes
+  reproducibles en [`informe/`](informe/README.md).
+- Guion de 15 minutos: [`docs/defensa/GUION_15_MIN.md`](docs/defensa/GUION_15_MIN.md).
+- Demostración: [`docs/defensa/DEMOSTRACION.md`](docs/defensa/DEMOSTRACION.md).
+- Preguntas de defensa: [`docs/defensa/PREGUNTAS_DEFENSA.md`](docs/defensa/PREGUNTAS_DEFENSA.md).
+- Matriz final: [`docs/TRAZABILIDAD_FINAL.md`](docs/TRAZABILIDAD_FINAL.md).
+
 ## Estado
 
-Los Sprints 0 a 5 y las tareas TL-001 a TL-027 están completados con la
-limitación de memoria dinámica detallada en los resultados. El Sprint 6
-permanece pendiente: informe LNCS, referencias, demostración, defensa y revisión
-final de trazabilidad. No se implementaron bases de datos, persistencia,
-interfaz, múltiples recursos ni fechas.
+Los Sprints 0 a 5 están completados. En el Sprint 6, TL-030 está completada y
+TL-028/TL-029 permanecen en progreso: faltan datos confirmados de autores,
+institución, correos y ORCID, y un ensayo humano cronometrado en el entorno de
+presentación. El PDF conserva marcadores explícitos y no se declara definitivo.
+No se implementaron bases de datos, persistencia, interfaz, múltiples recursos
+ni fechas.
 
 La especificación técnica está en
 [`docs/PROPUESTA_ROADMAP.md`](docs/PROPUESTA_ROADMAP.md), la guía conceptual en

@@ -4,10 +4,10 @@
 
 | Campo | Estado basado en evidencia |
 |---|---|
-| Sprint actual | Sprint 5 — Pruebas y reproducibilidad, finalizado |
-| Estado general | Intérprete estable, runner integral y documentación reproducible. |
-| Progreso del backlog | 27 tareas completadas, 3 pendientes, 0 en progreso, 0 bloqueadas. |
-| Próximo objetivo | Sprint 6: informe LNCS, defensa y revisión final de trazabilidad. |
+| Sprint actual | Sprint 6 — Entrega y defensa, en progreso |
+| Estado general | Informe LNCS compilado, defensa preparada y trazabilidad revisada; faltan datos de autoría y ensayo humano. |
+| Progreso del backlog | 28 tareas completadas, 0 pendientes, 2 en progreso, 0 bloqueadas. |
+| Próximo objetivo | Confirmar metadatos del informe y registrar un ensayo menor o igual a 15 minutos. |
 
 ## Cierre de sprints
 
@@ -19,6 +19,7 @@
 | Sprint 3 — Estructuras internas y semántica | Completado | AST, agenda, reglas y 21 pruebas. |
 | Sprint 4 — Intérprete completo | Completado | Backend y 15 escenarios funcionales. |
 | Sprint 5 — Pruebas y reproducibilidad | Completado | 68 comprobaciones, runner integral, análisis de memoria y documentación. |
+| Sprint 6 — Entrega y defensa | En progreso | PDF LNCS, demo y matriz disponibles; autoría y ensayo humano pendientes. |
 
 ## Actividades completadas
 
@@ -27,15 +28,19 @@
 - [x] [TL-025 — Implementar runner y `make test`](BACKLOG.md#tl-025).
 - [x] [TL-026 — Verificar memoria y compilación limpia](BACKLOG.md#tl-026).
 - [x] [TL-027 — Documentar instalación y uso reproducible](BACKLOG.md#tl-027).
+- [x] [TL-030 — Ejecutar revisión final de trazabilidad](BACKLOG.md#tl-030).
 
-## Actividades pendientes
+## Actividades en progreso
 
-- [ ] [TL-028 — Elaborar el informe LNCS](BACKLOG.md#tl-028).
-- [ ] [TL-029 — Preparar demostración y defensa](BACKLOG.md#tl-029).
-- [ ] [TL-030 — Ejecutar revisión final de trazabilidad](BACKLOG.md#tl-030).
+- [ ] [TL-028 — Elaborar el informe LNCS](BACKLOG.md#tl-028): falta
+  completar autoría, afiliación y contacto confirmados.
+- [ ] [TL-029 — Preparar demostración y defensa](BACKLOG.md#tl-029): falta
+  cronometrar y registrar el ensayo humano en el entorno de presentación.
 
-Sprint 6 no fue iniciado. No se redactó el informe, no se crearon referencias o
-figuras y no se preparó una presentación.
+Sprint 6 fue ejecutado hasta el límite verificable sin intervención de los
+integrantes. El informe compiló en LNCS y fue revisado visualmente; la demo se
+ejecutó con los casos seleccionados; y la trazabilidad quedó consolidada. No se
+cierra el sprint porque no se inventan datos de autoría ni un ensayo humano.
 
 ## Entorno verificado
 
@@ -181,6 +186,7 @@ intérprete.
 | 2026-11-02 | Sprint 4 completado. | Intérprete y 64 pruebas acumuladas. |
 | 2026-11-02 | Corpus y runner consolidados. | 68/68 y falla inducida detectada. |
 | 2026-11-02 | Calidad y reproducibilidad verificadas. | Builds normal/incremental/paralelo y evidencia de memoria. |
+| 2026-11-02 | Sprint 6 ejecutado parcialmente. | PDF LNCS revisado, demo preparada, 68/68 y trazabilidad final; pendientes humanos registrados. |
 
 ## Retrospectiva — Sprint 5
 
@@ -191,5 +197,15 @@ intérprete.
   distinguir fuente propia de salida de herramientas.
 - **Qué debe mejorarse:** si se dispone de Linux, ejecutar Valgrind o ASan antes
   de la entrega para reducir la incertidumbre dinámica.
-- **Qué continúa en el próximo sprint:** TL-028 a TL-030: informe LNCS,
-  referencias reales, demo, defensa y revisión final. Sprint 6 no fue iniciado.
+- **Qué continuaba al cierre del Sprint 5:** TL-028 a TL-030: informe LNCS,
+  referencias reales, demo, defensa y revisión final. En ese momento el Sprint
+  6 todavía no se había iniciado.
+
+## Revisión — Sprint 6
+
+- **Qué se completó:** TL-030, fuentes y PDF LNCS, referencias verificables,
+  figuras técnicas, demo y material de preguntas.
+- **Qué se verificó:** compilación del informe por dos vías, revisión visual de
+  ocho páginas, ejecución de los cuatro pasos de demo y nueva corrida 68/68.
+- **Qué impide el cierre:** faltan autores, institución, correos y ORCID
+  confirmados, además del ensayo humano cronometrado en el equipo de exposición.
