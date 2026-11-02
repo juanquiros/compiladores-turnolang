@@ -25,11 +25,11 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 | [TL-016](#tl-016) | Validar identificadores y cancelaciones | Crítica | 3 | Completado |
 | [TL-017](#tl-017) | Validar superposiciones | Crítica | 3 | Completado |
 | [TL-018](#tl-018) | Integrar diagnósticos semánticos | Alta | 3 | Completado |
-| [TL-019](#tl-019) | Implementar recorrido secuencial | Crítica | 4 | Pendiente |
-| [TL-020](#tl-020) | Ejecutar reservas y cancelaciones | Crítica | 4 | Pendiente |
-| [TL-021](#tl-021) | Ejecutar disponibilidad | Alta | 4 | Pendiente |
-| [TL-022](#tl-022) | Ejecutar listado ordenado | Alta | 4 | Pendiente |
-| [TL-023](#tl-023) | Estabilizar salida y códigos de proceso | Alta | 4 | Pendiente |
+| [TL-019](#tl-019) | Implementar recorrido secuencial | Crítica | 4 | Completado |
+| [TL-020](#tl-020) | Ejecutar reservas y cancelaciones | Crítica | 4 | Completado |
+| [TL-021](#tl-021) | Ejecutar disponibilidad | Alta | 4 | Completado |
+| [TL-022](#tl-022) | Ejecutar listado ordenado | Alta | 4 | Completado |
+| [TL-023](#tl-023) | Estabilizar salida y códigos de proceso | Alta | 4 | Completado |
 | [TL-024](#tl-024) | Completar corpus de escenarios | Crítica | 5 | Pendiente |
 | [TL-025](#tl-025) | Implementar runner y `make test` | Crítica | 5 | Pendiente |
 | [TL-026](#tl-026) | Verificar memoria y compilación limpia | Alta | 5 | Pendiente |
@@ -279,7 +279,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-013, TL-018.
 - **Criterios de aceptación:** el orden observable coincide con el archivo y no
   hay interpretación si el frontend rechazó el programa.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 <a id="tl-020"></a>
 ### TL-020 — Ejecutar reservas y cancelaciones
@@ -291,7 +291,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-019.
 - **Criterios de aceptación:** los efectos posteriores reflejan exactamente las
   reservas activas y una operación inválida no los modifica.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 <a id="tl-021"></a>
 ### TL-021 — Ejecutar consultas de disponibilidad
@@ -303,7 +303,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-017, TL-019, TL-020.
 - **Criterios de aceptación:** consulta libre, ocupada y consecutiva producen el
   resultado esperado sin modificar estado.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 <a id="tl-022"></a>
 ### TL-022 — Ejecutar el listado ordenado
@@ -315,7 +315,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-019, TL-020.
 - **Criterios de aceptación:** datos insertados fuera de orden aparecen ordenados
   y las reservas canceladas no se muestran.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 <a id="tl-023"></a>
 ### TL-023 — Estabilizar salida y códigos de proceso
@@ -327,7 +327,7 @@ describen qué evidencia se necesita; no implican que esa evidencia ya exista.
 - **Dependencias:** TL-020, TL-021, TL-022.
 - **Criterios de aceptación:** el formato está documentado y las ejecuciones
   repetidas generan resultados deterministas.
-- **Estado:** Pendiente.
+- **Estado:** Completado.
 
 ## Sprint 5: pruebas y reproducibilidad
 

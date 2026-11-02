@@ -27,8 +27,9 @@ LEXER_OBJ    := $(BUILD_DIR)/lexer.o
 AST_OBJ      := $(BUILD_DIR)/ast.o
 AGENDA_OBJ   := $(BUILD_DIR)/agenda.o
 SEMANTICA_OBJ := $(BUILD_DIR)/semantica.o
+INTERPRETE_OBJ := $(BUILD_DIR)/interprete.o
 OBJECTS      := $(MAIN_OBJ) $(PARSER_OBJ) $(LEXER_OBJ) $(AST_OBJ) \
-                $(AGENDA_OBJ) $(SEMANTICA_OBJ)
+                $(AGENDA_OBJ) $(SEMANTICA_OBJ) $(INTERPRETE_OBJ)
 
 .DEFAULT_GOAL := all
 
@@ -46,7 +47,7 @@ $(LEXER_C): $(SRC_DIR)/lexer.l $(PARSER_H) | $(BUILD_DIR)
 	$(FLEX) --outfile=$@ $<
 
 $(MAIN_OBJ): $(SRC_DIR)/main.c $(PARSER_H) $(SRC_DIR)/ast.h \
-             $(SRC_DIR)/semantica.h | $(BUILD_DIR)
+             $(SRC_DIR)/semantica.h $(SRC_DIR)/interprete.h | $(BUILD_DIR)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 $(PARSER_OBJ): $(PARSER_C) $(PARSER_H) $(SRC_DIR)/ast.h | $(BUILD_DIR)
@@ -65,6 +66,11 @@ $(SEMANTICA_OBJ): $(SRC_DIR)/semantica.c $(SRC_DIR)/semantica.h \
                   $(SRC_DIR)/ast.h $(SRC_DIR)/agenda.h | $(BUILD_DIR)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
+$(INTERPRETE_OBJ): $(SRC_DIR)/interprete.c $(SRC_DIR)/interprete.h \
+                   $(SRC_DIR)/semantica.h $(SRC_DIR)/agenda.h \
+                   $(SRC_DIR)/ast.h | $(BUILD_DIR)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
 $(TARGET): $(OBJECTS) | $(BIN_DIR)
 	$(CC) $(LDFLAGS) $(OBJECTS) $(LDLIBS) -o $@
 
@@ -72,6 +78,7 @@ test: $(TARGET)
 	bash scripts/test_smoke.sh
 	bash scripts/test_frontend.sh
 	bash scripts/test_semantica.sh
+	bash scripts/test_interprete.sh
 
 clean:
 	rm -rf -- $(BUILD_DIR) $(BIN_DIR)

@@ -1,11 +1,19 @@
 #ifndef TURNOLANG_AGENDA_H
 #define TURNOLANG_AGENDA_H
 
+#include <stddef.h>
+
 typedef struct ReservaAgenda ReservaAgenda;
 
 typedef struct {
     ReservaAgenda *primera;
 } Agenda;
+
+typedef struct {
+    const char *identificador;
+    int inicio;
+    int fin;
+} ReservaAgendaVista;
 
 void agenda_inicializar(Agenda *agenda);
 void agenda_liberar(Agenda *agenda);
@@ -34,5 +42,11 @@ int agenda_agregar_reserva(
     int fin
 );
 int agenda_cancelar_reserva(Agenda *agenda, const char *identificador);
+int agenda_obtener_activas_ordenadas(
+    const Agenda *agenda,
+    ReservaAgendaVista **reservas,
+    size_t *cantidad
+);
+void agenda_liberar_vistas(ReservaAgendaVista *reservas);
 
 #endif

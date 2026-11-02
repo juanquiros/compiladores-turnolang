@@ -41,6 +41,24 @@ static ReservaAgenda *agenda_buscar_activa_mutable(
     return NULL;
 }
 
+static int comparar_vistas(const void *izquierda, const void *derecha)
+{
+    const ReservaAgendaVista *reserva_izquierda = izquierda;
+    const ReservaAgendaVista *reserva_derecha = derecha;
+
+    if (reserva_izquierda->inicio < reserva_derecha->inicio) {
+        return -1;
+    }
+    if (reserva_izquierda->inicio > reserva_derecha->inicio) {
+        return 1;
+    }
+
+    return strcmp(
+        reserva_izquierda->identificador,
+        reserva_derecha->identificador
+    );
+}
+
 void agenda_inicializar(Agenda *agenda)
 {
     agenda->primera = NULL;
@@ -156,4 +174,53 @@ int agenda_cancelar_reserva(Agenda *agenda, const char *identificador)
 
     reserva->activa = 0;
     return 1;
+}
+
+int agenda_obtener_activas_ordenadas(
+    const Agenda *agenda,
+    ReservaAgendaVista **reservas,
+    size_t *cantidad
+)
+{
+    const ReservaAgenda *actual;
+    ReservaAgendaVista *vistas;
+    size_t total = 0;
+    size_t indice = 0;
+
+    *reservas = NULL;
+    *cantidad = 0;
+
+    for (actual = agenda->primera; actual != NULL; actual = actual->siguiente) {
+        if (actual->activa) {
+            total++;
+        }
+    }
+
+    if (total == 0) {
+        return 1;
+    }
+
+    vistas = malloc(total * sizeof(*vistas));
+    if (vistas == NULL) {
+        return 0;
+    }
+
+    for (actual = agenda->primera; actual != NULL; actual = actual->siguiente) {
+        if (actual->activa) {
+            vistas[indice].identificador = actual->identificador;
+            vistas[indice].inicio = actual->inicio;
+            vistas[indice].fin = actual->fin;
+            indice++;
+        }
+    }
+
+    qsort(vistas, total, sizeof(*vistas), comparar_vistas);
+    *reservas = vistas;
+    *cantidad = total;
+    return 1;
+}
+
+void agenda_liberar_vistas(ReservaAgendaVista *reservas)
+{
+    free(reservas);
 }

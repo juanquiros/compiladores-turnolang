@@ -55,7 +55,8 @@ run_valid() {
     stdout_file="$TEMP_DIR/case_${CASE_NUMBER}.out"
     stderr_file="$TEMP_DIR/case_${CASE_NUMBER}.err"
 
-    if "$EXECUTABLE" "$source_file" >"$stdout_file" 2>"$stderr_file"; then
+    if "$EXECUTABLE" --solo-semantica "$source_file" \
+        >"$stdout_file" 2>"$stderr_file"; then
         status=0
     else
         status=$?
@@ -64,7 +65,6 @@ run_valid() {
     if (( status == 0 )) &&
        grep -Fq 'Análisis léxico y sintáctico: correcto.' "$stdout_file" &&
        grep -Fq 'Análisis semántico: correcto.' "$stdout_file" &&
-       grep -Fq 'Interpretación: pendiente.' "$stdout_file" &&
        ! grep -Eq 'DISPONIBLE|OCUPADO|Agenda:' "$stdout_file" &&
        [[ ! -s "$stderr_file" ]]; then
         pass "$label"
@@ -87,7 +87,8 @@ run_error() {
     stdout_file="$TEMP_DIR/case_${CASE_NUMBER}.out"
     stderr_file="$TEMP_DIR/case_${CASE_NUMBER}.err"
 
-    if "$EXECUTABLE" "$source_file" >"$stdout_file" 2>"$stderr_file"; then
+    if "$EXECUTABLE" --solo-semantica "$source_file" \
+        >"$stdout_file" 2>"$stderr_file"; then
         status=0
     else
         status=$?

@@ -131,7 +131,7 @@ static ResultadoSemantico validar_sentencia(
                 instruccion->datos.disponibilidad.fin
             );
             if (resultado.codigo == SEMANTICA_OK) {
-                (void)agenda_buscar_superposicion(
+                resultado.reserva_relacionada = agenda_buscar_superposicion(
                     agenda,
                     resultado.inicio_minutos,
                     resultado.fin_minutos
@@ -250,7 +250,11 @@ static void informar_error_semantico(
     }
 }
 
-int semantica_validar_programa(const Programa *programa)
+int semantica_procesar_programa(
+    const Programa *programa,
+    SemanticaObservador observador,
+    void *datos_observador
+)
 {
     Agenda agenda;
     const Instruccion *instruccion;
@@ -286,9 +290,33 @@ int semantica_validar_programa(const Programa *programa)
             return 0;
         }
 
+        if (observador != NULL) {
+            SemanticaContextoInstruccion contexto = {
+                resultado.inicio_minutos,
+                resultado.fin_minutos,
+                resultado.reserva_relacionada != NULL
+            };
+
+            if (!observador(
+                    programa,
+                    instruccion,
+                    &agenda,
+                    &contexto,
+                    datos_observador
+                )) {
+                agenda_liberar(&agenda);
+                return 0;
+            }
+        }
+
         instruccion = instruccion->siguiente;
     }
 
     agenda_liberar(&agenda);
     return 1;
+}
+
+int semantica_validar_programa(const Programa *programa)
+{
+    return semantica_procesar_programa(programa, NULL, NULL);
 }

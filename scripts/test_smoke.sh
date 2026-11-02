@@ -54,7 +54,8 @@ printf 'AGENDA "Consultorio A"@;\n' >"$LEXICAL_SOURCE"
 
 printf 'TURNOLANG - PRUEBAS\n\nSprint 1:\n'
 
-if run_and_capture "$VALID_OUTPUT" "$EXECUTABLE" "$ROOT_DIR/examples/smoke_agenda.tl"; then
+if run_and_capture "$VALID_OUTPUT" "$EXECUTABLE" --solo-sintaxis \
+    "$ROOT_DIR/examples/smoke_agenda.tl"; then
     if grep -Fq 'Análisis léxico y sintáctico: correcto.' "$VALID_OUTPUT"; then
         pass 'La cabecera mínima válida es aceptada.'
     else
